@@ -33,17 +33,17 @@ body{
 /* ---------- ambient background ---------- */
 .bg-grad{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(900px 620px at 12% -6%, rgba(240,151,60,.16), transparent 60%),
-    radial-gradient(820px 600px at 88% 22%, rgba(251,113,133,.10), transparent 60%),
-    radial-gradient(1000px 800px at 50% 110%, rgba(183,155,255,.14), transparent 62%),
-    radial-gradient(700px 500px at 78% 78%, rgba(95,157,255,.10), transparent 60%);
+    radial-gradient(900px 620px at 12% -6%, rgba(240,151,60,.27), transparent 60%),
+    radial-gradient(820px 600px at 88% 22%, rgba(251,113,133,.18), transparent 60%),
+    radial-gradient(1000px 800px at 50% 110%, rgba(183,155,255,.24), transparent 62%),
+    radial-gradient(700px 500px at 78% 78%, rgba(95,157,255,.18), transparent 60%);
 }
 #dots{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85}
 /* ambient drifting orbs — fill empty space with slow, barely-there motion */
 .orb{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px)}
-.o1{width:520px;height:520px;left:-140px;top:6%;background:radial-gradient(circle,rgba(240,151,60,.16),transparent 70%);animation:drift1 38s ease-in-out infinite alternate}
-.o2{width:460px;height:460px;right:-120px;top:38%;background:radial-gradient(circle,rgba(251,113,133,.12),transparent 70%);animation:drift2 46s ease-in-out infinite alternate}
-.o3{width:430px;height:430px;left:24%;bottom:-160px;background:radial-gradient(circle,rgba(95,157,255,.10),transparent 70%);animation:drift3 54s ease-in-out infinite alternate}
+.o1{width:520px;height:520px;left:-140px;top:6%;background:radial-gradient(circle,rgba(240,151,60,.28),transparent 70%);animation:drift1 38s ease-in-out infinite alternate}
+.o2{width:460px;height:460px;right:-120px;top:38%;background:radial-gradient(circle,rgba(251,113,133,.21),transparent 70%);animation:drift2 46s ease-in-out infinite alternate}
+.o3{width:430px;height:430px;left:24%;bottom:-160px;background:radial-gradient(circle,rgba(95,157,255,.18),transparent 70%);animation:drift3 54s ease-in-out infinite alternate}
 @keyframes drift1{from{transform:translate(0,0)}to{transform:translate(120px,80px)}}
 @keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-100px,-70px)}}
 @keyframes drift3{from{transform:translate(0,0)}to{transform:translate(90px,-80px)}}
@@ -427,7 +427,7 @@ nav.chapters .rail{padding-right:3.8rem}
   <p class="sub"><strong>GHK-Cu + BPC-157 + TB-500 + KPV</strong> — four investigational peptides in one stack: three aimed at repair, one aimed at inflammation. This page walks through what each compound is, where the idea came from, what the science actually supports, and what people online report. <strong>Claims vs. evidence, side by side.</strong></p>
   <div class="quickread reveal">
     <span class="tag">The short version</span>
-    <p><strong>Four investigational compounds, zero human trials of the stack itself.</strong> KLOW is the GLOW stack (GHK-Cu + BPC-157 + TB-500) with KPV added — the fourth compound targets inflammation while the other three target repair. None of the four is FDA-approved as a medicine; BPC-157 and TB-500 are banned in tested sport. Nothing here is medical advice or a recommendation to use anything.</p>
+    <p><strong>Four investigational compounds, zero human trials of the stack itself.</strong> KLOW is the GLOW stack (GHK-Cu + BPC-157 + TB-500) with KPV added — the fourth compound targets inflammation while the other three target repair. BPC-157 and TB-500 are banned in tested sport.</p>
   </div>
   <div class="hero-stats">
     <div class="stat reveal"><div class="num" data-count="4">0</div><div class="lbl">peptides in the stack</div></div>
@@ -443,7 +443,7 @@ nav.chapters .rail{padding-right:3.8rem}
 <section class="chapter" id="ch1">
   <div class="eyebrow reveal"><span class="n">01</span> Meet the four</div>
   <h2 class="reveal">Four compounds, <span class="hl">one stack</span></h2>
-  <p class="lede reveal">KLOW is a four-peptide blend discussed and sold as a single stack: <strong>GHK-Cu + BPC-157 + TB-500 + KPV</strong>. The reference blend totals 80mg — half of it GHK-Cu, with the other three at 10mg each. Three of the four are aimed at <em>repair</em>; the fourth, KPV, is aimed at <em>inflammation</em>. <strong>None of the four is FDA-approved as a medicine.</strong></p>
+  <p class="lede reveal">KLOW is a four-peptide blend discussed and sold as a single stack: <strong>GHK-Cu + BPC-157 + TB-500 + KPV</strong>. The reference blend totals 80mg — half of it GHK-Cu, with the other three at 10mg each. Three of the four are aimed at <em>repair</em>; the fourth, KPV, is aimed at <em>inflammation</em>.</p>
 
   <div class="diagram reveal">
     <svg viewBox="0 0 900 250" role="img" aria-label="Stacked bar showing the 80mg reference blend: GHK-Cu 50mg, BPC-157 10mg, TB-500 10mg, KPV 10mg">
@@ -479,7 +479,7 @@ nav.chapters .rail{padding-right:3.8rem}
         <li><strong>3 amino acids</strong> (Gly-His-Lys) gripping a <strong>copper</strong> ion — a molecule your own blood carries, declining ~60% from age 20 to 60.</li>
         <li><strong>Proposed</strong> job: ferrying copper to enzymes that build <strong>collagen and elastin</strong> — the skin-and-tissue lane of the stack.</li>
         <li>The only one of the four with <strong>real (small) human trials</strong> — mostly topical, mostly skin.</li>
-        <li>Cosmetic ingredient; <strong>not FDA-approved as a drug</strong> — and notably <strong>not on WADA's banned list</strong>.</li>
+        <li>Cosmetic ingredient — and notably <strong>not on WADA's banned list</strong>.</li>
       </ul>
       <div class="plain"><span class="plabel">Plain English</span><b>The skin-and-collagen member.</b> A copper-carrying fragment your body already makes, proposed to feed the enzymes that stitch skin and tissue together.</div>
     </div>
@@ -489,7 +489,7 @@ nav.chapters .rail{padding-right:3.8rem}
         <li><strong>15 amino acids</strong> copied from a protective protein found in human stomach juice.</li>
         <li><strong>Proposed</strong> jobs: nudging new tiny blood vessels to grow, calming inflammatory signals, cueing tendon and connective-tissue repair.</li>
         <li>Evidence is <strong>35-of-36 preclinical</strong> per a 2025 review — animals and cells, essentially no robust human trials.</li>
-        <li><strong>Not FDA-approved; banned in tested sport</strong> (WADA S0, non-approved substances).</li>
+        <li><strong>Banned in tested sport</strong> (WADA S0).</li>
       </ul>
       <div class="plain"><span class="plabel">Plain English</span><b>The gut-and-tendon member.</b> A stomach-protein fragment studied for repair signaling — interesting in rats, unproven in people.</div>
     </div>
@@ -499,7 +499,7 @@ nav.chapters .rail{padding-right:3.8rem}
         <li><strong>7 amino acids</strong> — just the tip (units 17–23) of <strong>thymosin beta-4</strong>, a 43-unit protein in nearly every human cell.</li>
         <li><strong>Proposed</strong> job: grabbing <strong>actin</strong> (cell scaffolding) to help repair cells <strong>migrate toward damage</strong>.</li>
         <li>The <em>parent</em> protein reached Phase 2 trials — <strong>the 7-unit fragment itself has zero human trials</strong>.</li>
-        <li><strong>Not FDA-approved; banned in tested sport</strong> (WADA S2).</li>
+        <li><strong>Banned in tested sport</strong> (WADA S2).</li>
       </ul>
       <div class="plain"><span class="plabel">Plain English</span><b>The cell-movement member.</b> A snippet of a near-universal cell protein, theorized to help repair crews travel to the injury — unproven in humans.</div>
     </div>
@@ -509,7 +509,7 @@ nav.chapters .rail{padding-right:3.8rem}
         <li><strong>3 amino acids</strong> (Lys-Pro-Val) — the tail end of <strong>alpha-MSH</strong>, a hormone your pituitary makes.</li>
         <li><strong>Proposed</strong> job: switching off <strong>NF-κB</strong>, the master alarm of inflammation — <em>without</em> the tanning/appetite effects of its parent.</li>
         <li><strong>Zero human trials</strong>; strongest work is in mouse colitis models, going back to <strong>1989</strong>.</li>
-        <li><strong>Not FDA-approved</strong> — though an FDA advisory panel voted <strong>8–6 in July 2026</strong> to consider it for the compounding list.</li>
+        <li>An FDA advisory panel voted <strong>8–6 in July 2026</strong> to consider it for the compounding list.</li>
       </ul>
       <div class="plain"><span class="plabel">Plain English</span><b>The inflammation-brake member — the whole reason KLOW exists.</b> A three-bead snippet that quiets inflammatory alarms in lab studies, with no human data yet.</div>
     </div>
@@ -725,7 +725,6 @@ nav.chapters .rail{padding-right:3.8rem}
 
   <div class="panel reveal">
     <h3>Status check — the non-negotiables</h3>
-    <div class="kv"><span class="k r">FDA</span><p><strong>None of the four is FDA-approved</strong> as a medicine for any use. All are investigational / research chemicals.</p></div>
     <div class="kv"><span class="k r">WADA</span><p><strong>BPC-157 (S0) and TB-500 (S2) are banned in tested sport.</strong> GHK-Cu is not on the banned list; KPV's status is untested gray area. Tested athletes risk sanctions.</p></div>
     <div class="kv"><span class="k a">Regulation</span><p>Blends move through <strong>unregulated gray-market channels</strong> — independent testing keeps finding mislabeled or contaminated vials in this space.</p></div>
     <div class="plain"><span class="plabel">Plain English</span><b>Almost everything "known" comes from rats and petri dishes.</b> No human trials of the stack, no human trials of TB-500's fragment or KPV at all, and only small skin trials for GHK-Cu. The 2026 FDA vote was about <em>compounding access</em>, not approval — and it wasn't unanimous.</div>
@@ -939,17 +938,17 @@ nav.chapters .rail{padding-right:3.8rem}
       <div class="plain"><span class="plabel">Plain English</span><b>A doorway that multiplies where there's trouble.</b> Your gut lining is studded with tiny doors that pull small peptides inside — that is how a three-bead fragment like KPV could survive a trip through the digestive tract when bigger peptides get shredded. The clever part, found in mouse studies: inflamed colon tissue grows <em>extra</em> doors, so the most inflamed spots soak up the most KPV — a self-targeting effect, like a fire extinguisher that sprays harder where the fire is hottest. Elegant in mice. Unproven in humans. And it is worth noting the whole oral-KPV story leans on this one transporter behaving the same way in people — an assumption, not a finding.</div>
     </div></div>
     <div class="g-item"><button class="g-q"><svg class="gthumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(240,151,60,.12)"/><circle cx="24" cy="24" r="10" fill="none" stroke="#f0973c" stroke-width="3"/><circle cx="24" cy="24" r="4" fill="#f0973c"/><text x="24" y="44" text-anchor="middle" fill="#f0973c" font-size="10" font-weight="800" font-family="inherit">Cu</text></svg><span class="term">GHK-Cu</span><span class="plus">+</span></button><div class="g-a">
-      <p class="gsci"><span class="gslabel">The science</span>Glycyl-histidyl-lysine bound to copper: a tripeptide–copper complex found naturally in human plasma, saliva, and urine, with blood levels falling roughly 60% between age 20 and 60. Its grounded biochemistry is copper delivery — GHK binds Cu²⁺ tightly and supplies it to copper-dependent enzymes including lysyl oxidase (collagen/elastin cross-linking) and superoxide dismutase (antioxidant defense). The debated tier: lab studies reporting ~4,048 genes shifted toward repair patterns in fibroblasts, framed by proponents as 'resetting' aged gene expression. Regulatory status: cosmetic ingredient, not FDA-approved as a drug; notably absent from WADA's banned list. It is the only KLOW member with real (small, topical, skin-focused) human trials.</p>
+      <p class="gsci"><span class="gslabel">The science</span>Glycyl-histidyl-lysine bound to copper: a tripeptide–copper complex found naturally in human plasma, saliva, and urine, with blood levels falling roughly 60% between age 20 and 60. Its grounded biochemistry is copper delivery — GHK binds Cu²⁺ tightly and supplies it to copper-dependent enzymes including lysyl oxidase (collagen/elastin cross-linking) and superoxide dismutase (antioxidant defense). The debated tier: lab studies reporting ~4,048 genes shifted toward repair patterns in fibroblasts, framed by proponents as 'resetting' aged gene expression. Sold as a cosmetic ingredient; notably absent from WADA's banned list. It is the only KLOW member with real (small, topical, skin-focused) human trials.</p>
       <p class="gex"><span class="gslabel">Example</span>GHK-Cu is 50mg of the 80mg reference blend — the bulk of the vial — and the stack's skin-and-collagen lane.</p>
       <div class="plain"><span class="plabel">Plain English</span><b>The copper courier.</b> Your blood used to carry plenty of this little copper-gripping fragment; levels slide downhill with age. The solid part of its story is gloriously un-mysterious: it delivers copper to enzymes that stitch collagen together and defuse oxidative damage — textbook biochemistry your body runs every day. The spicy part is the gene story: in lab dishes, thousands of genes nudge toward repair patterns, which marketers translate as 'gene reset.' A dish is not a face. GHK-Cu is the most evidence-backed member of the stack and still thin by any medical standard — which tells you everything about where the other three stand.</div>
     </div></div>
     <div class="g-item"><button class="g-q"><svg class="gthumb v2" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(183,155,255,.12)"/><path d="M14 34c6-10 14-10 20 0s14 10 20 0" fill="none" stroke="#b79bff" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="24" r="4" fill="#f0973c"/></svg><span class="term">BPC-157</span><span class="plus">+</span></button><div class="g-a">
-      <p class="gsci"><span class="gslabel">The science</span>Body Protection Compound-157: a 15-amino-acid fragment derived from a protective protein found in human gastric juice. Unusual among peptides for surviving stomach acid in lab tests. Proposed mechanisms include promoting angiogenesis (new capillary growth), modulating inflammatory signaling molecules, and supporting tendon and connective-tissue repair — essentially all from rodent and cell-culture work. Evidence status per a 2025 review: 35 of 36 published studies preclinical. Regulatory: not FDA-approved for any use; prohibited in tested sport under WADA's S0 (non-approved substances).</p>
+      <p class="gsci"><span class="gslabel">The science</span>Body Protection Compound-157: a 15-amino-acid fragment derived from a protective protein found in human gastric juice. Unusual among peptides for surviving stomach acid in lab tests. Proposed mechanisms include promoting angiogenesis (new capillary growth), modulating inflammatory signaling molecules, and supporting tendon and connective-tissue repair — essentially all from rodent and cell-culture work. Evidence status per a 2025 review: 35 of 36 published studies preclinical. Prohibited in tested sport under WADA's S0.</p>
       <p class="gex"><span class="gslabel">Example</span>BPC-157 is the 10mg 'repair signal' member of KLOW — and the source of the stack's gut-repair folklore, tracing to its stomach-protein origin.</p>
       <div class="plain"><span class="plabel">Plain English</span><b>The stomach fragment with a rat-sized fan club.</b> Fifteen amino acids copied from a protein that protects your stomach lining — unusually tough for a peptide, surviving acid that shreds most of its cousins. In animal studies it seems to encourage tiny blood vessels to grow toward damage and nudge connective tissue toward repair, which is why forums credit it with everything from tendon comebacks to calmer guts. Here is the cold water: 35 of 36 published studies are animal or cell work. It is banned in tested sport, unapproved everywhere as a medicine, and its human pharmacology is essentially a blank page. Interesting? Genuinely. Proven? Not even close.</div>
     </div></div>
     <div class="g-item"><button class="g-q"><svg class="gthumb v3" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(95,157,255,.12)"/><path d="M10 30c8-12 16 4 24-6s10 2 12-2" fill="none" stroke="#5f9dff" stroke-width="3" stroke-linecap="round"/><circle cx="34" cy="14" r="4" fill="#5f9dff"/></svg><span class="term">Thymosin beta-4 / TB-500</span><span class="plus">+</span></button><div class="g-a">
-      <p class="gsci"><span class="gslabel">The science</span>Thymosin beta-4 is a 43-amino-acid protein found in nearly every human cell, where one of its jobs is sequestering G-actin — regulating the cell's internal skeleton and thereby cell movement. TB-500 is a 7-amino-acid fragment (positions 17–23) sold as capturing the parent's actin-binding, migration-promoting activity. Critical distinction: the <em>parent</em> protein reached Phase 2 clinical trials for certain uses; the <em>fragment</em> sold as TB-500 has zero published human trials. A rodent observation linked the parent to hair growth, which forums telephone-gamed into human hair claims. Regulatory: not FDA-approved; prohibited in tested sport (WADA S2).</p>
+      <p class="gsci"><span class="gslabel">The science</span>Thymosin beta-4 is a 43-amino-acid protein found in nearly every human cell, where one of its jobs is sequestering G-actin — regulating the cell's internal skeleton and thereby cell movement. TB-500 is a 7-amino-acid fragment (positions 17–23) sold as capturing the parent's actin-binding, migration-promoting activity. Critical distinction: the <em>parent</em> protein reached Phase 2 clinical trials for certain uses; the <em>fragment</em> sold as TB-500 has zero published human trials. A rodent observation linked the parent to hair growth, which forums telephone-gamed into human hair claims. Prohibited in tested sport (WADA S2).</p>
       <p class="gex"><span class="gslabel">Example</span>TB-500 is KLOW's 10mg 'cell migration' member — and the source of the stack's hair-growth lore, which traces to the parent protein in mice, not the fragment in humans.</p>
       <div class="plain"><span class="plabel">Plain English</span><b>A snippet sold on its parent's résumé.</b> Thymosin beta-4 is a real, important protein in nearly every cell you own — it manages the internal scaffolding that lets cells move. TB-500 is seven amino acids sliced from its middle, sold on the claim that the snippet keeps the parent's best trick: helping repair cells crawl toward damage. The parent made it to mid-stage human trials; the fragment has precisely zero. That gap — parent vs. fragment — is the most important seven-amino-acid distinction on this page, and the one most marketing quietly skips. Forums also credit it with hair growth, which comes from a mouse study of the <em>parent</em>. A fragment is not the parent, and a mouse is not you.</div>
     </div></div>
@@ -995,7 +994,6 @@ nav.chapters .rail{padding-right:3.8rem}
     <div class="kv"><span class="k r">No sourcing</span><p>No vendors, no brand recommendations, no buying guidance. Where you get unregulated compounds is not something this page will help with.</p></div>
     <div class="kv"><span class="k a">No stacking advice</span><p>Nothing here endorses combining these compounds — or adding more. "The stack exists" is a fact about internet culture, not a recommendation.</p></div>
     <div class="kv"><span class="k a">Not exhaustive science</span><p>This is a simplified overview for a general audience. It omits nuance, contrary findings, and the full weight of the primary literature — read the actual reviews before forming strong opinions.</p></div>
-    <div class="kv"><span class="k v">Not medical advice</span><p>Nothing here diagnoses, treats, or recommends. Health decisions belong with a qualified professional who knows your history — not a webpage.</p></div>
     <div class="plain"><span class="plabel">Plain English</span><b>This page explains the conversation; it doesn't join it.</b> It won't tell you what to take, where to get it, or whether it works — because on the evidence available, those questions don't have responsible answers yet.</div>
   </div>
 </section>
