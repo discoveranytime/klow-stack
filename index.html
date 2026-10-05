@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The KLOW Stack — GHK-Cu + BPC-157 + TB-500 + KPV | Claims vs Evidence</title>
+<meta name="description" content="An interactive, educational deep-dive into the KLOW Stack (GHK-Cu + BPC-157 + TB-500 + KPV): what each compound is, where the idea came from, the honest evidence check, and what people online report. Not medical advice.">
+<script>
+/* apply saved theme before first paint (default: dark) */
+try{var _t=localStorage.getItem("klow-theme");if(_t==="light"||_t==="dark")document.documentElement.setAttribute("data-theme",_t);}catch(e){}
+</script>
+<style>
+:root{
+  --bg0:#06070d; --bg1:#0a0c17;
+  --ink:#edf0f9; --muted:#a9b1c9; --faint:#7f88a5;
+  --purple:#b79bff; --purple-deep:#7c3aed;
+  --copper:#f0973c; --copper-deep:#a8621f;
+  --amber:#fbbf24; --pink:#fb7185; --sky:#5f9dff;
+  --card:#0d1020; --card2:#12162b;
+  --line:rgba(255,255,255,.09);
+  --grad:linear-gradient(100deg,#f0973c 0%,#fb7185 34%,#b79bff 67%,#5f9dff 100%);
+  --radius:18px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --disp:"Avenir Next","Segoe UI",-apple-system,BlinkMacSystemFont,Inter,Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font); background:var(--bg0); color:var(--ink);
+  font-size:1.06rem; line-height:1.75; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* ---------- ambient background ---------- */
+.bg-grad{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 620px at 12% -6%, rgba(240,151,60,.16), transparent 60%),
+    radial-gradient(820px 600px at 88% 22%, rgba(251,113,133,.10), transparent 60%),
+    radial-gradient(1000px 800px at 50% 110%, rgba(183,155,255,.14), transparent 62%),
+    radial-gradient(700px 500px at 78% 78%, rgba(95,157,255,.10), transparent 60%);
+}
+#dots{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.85}
+/* ambient drifting orbs — fill empty space with slow, barely-there motion */
+.orb{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px)}
+.o1{width:520px;height:520px;left:-140px;top:6%;background:radial-gradient(circle,rgba(240,151,60,.16),transparent 70%);animation:drift1 38s ease-in-out infinite alternate}
+.o2{width:460px;height:460px;right:-120px;top:38%;background:radial-gradient(circle,rgba(251,113,133,.12),transparent 70%);animation:drift2 46s ease-in-out infinite alternate}
+.o3{width:430px;height:430px;left:24%;bottom:-160px;background:radial-gradient(circle,rgba(95,157,255,.10),transparent 70%);animation:drift3 54s ease-in-out infinite alternate}
+@keyframes drift1{from{transform:translate(0,0)}to{transform:translate(120px,80px)}}
+@keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-100px,-70px)}}
+@keyframes drift3{from{transform:translate(0,0)}to{transform:translate(90px,-80px)}}
+/* completion confetti + toast */
+#confetti{position:fixed;inset:0;z-index:65;pointer-events:none;opacity:0;transition:opacity .6s ease}
+#confetti.show{opacity:1}
+#doneToast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);z-index:66;
+  background:var(--card);border:1px solid var(--line);color:var(--ink);
+  padding:.7rem 1.25rem;border-radius:999px;font-size:.9rem;font-weight:600;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .5s ease,transform .5s ease;
+  box-shadow:0 8px 30px rgba(0,0,0,.28)}
+#doneToast.show{opacity:1;transform:translate(-50%,0)}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay}
+/* ---------- progress + nav ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:0%;z-index:60;background:var(--grad);border-radius:0 3px 3px 0}
+nav.chapters{position:sticky;top:0;z-index:50;background:rgba(6,7,13,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+nav.chapters .rail{max-width:1080px;margin:0 auto;padding:.65rem 1rem;display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none}
+nav.chapters .rail::-webkit-scrollbar{display:none}
+nav.chapters a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:.82rem;font-weight:600;
+  letter-spacing:.04em;padding:.42rem .8rem;border:1px solid var(--line);border-radius:999px;white-space:nowrap;
+  transition:all .25s ease}
+nav.chapters a:hover{color:var(--ink);border-color:rgba(255,255,255,.25)}
+nav.chapters a.active{color:#0a0c14;background:var(--grad);border-color:transparent}
+/* ---------- layout ---------- */
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 1.25rem}
+section.chapter{padding:4.2rem 0 1rem;scroll-margin-top:84px}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:1rem}
+.eyebrow .n{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:10px;
+  background:var(--grad);color:#0a0c14;font-size:.85rem;letter-spacing:0}
+h2{font-family:var(--disp);font-size:clamp(1.7rem,4vw,2.5rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:1rem}
+h2 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);font-size:1.12rem;max-width:44rem;margin-bottom:2rem}
+.lede strong{color:var(--ink)}
+/* ---------- hero ---------- */
+.hero{position:relative;z-index:1;text-align:center;padding:5.5rem 1.25rem 3.5rem;max-width:960px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:.55rem;font-size:.78rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink);border:1px solid var(--line);background:rgba(255,255,255,.04);
+  padding:.55rem 1.1rem;border-radius:999px;margin-bottom:1.6rem}
+.badge .dot{width:.6rem;height:.6rem;border-radius:50%;background:var(--pink);box-shadow:0 0 0 0 rgba(251,113,133,.6);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(251,113,133,.55)}70%{box-shadow:0 0 0 12px rgba(251,113,133,0)}100%{box-shadow:0 0 0 0 rgba(251,113,133,0)}}
+.hero h1{font-family:var(--disp);font-weight:900;letter-spacing:-.03em;line-height:1.02;
+  font-size:clamp(2.6rem,8vw,5.2rem);margin-bottom:1.1rem}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:200% auto;animation:sheen 9s ease-in-out infinite}
+@keyframes sheen{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero .sub{color:var(--muted);font-size:clamp(1.05rem,2.4vw,1.3rem);max-width:42rem;margin:0 auto 2.2rem}
+.hero .sub strong{color:var(--ink)}
+.quickread{max-width:46rem;margin:0 auto;text-align:left;background:rgba(255,255,255,.035);
+  border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:flex-start}
+.quickread .tag{flex:0 0 auto;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--grad);color:#0a0c14;border-radius:8px;padding:.35rem .7rem;margin-top:.2rem}
+.quickread p{color:var(--muted);font-size:.98rem}
+.quickread p strong{color:var(--ink)}
+.hero-stats{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.4rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.5rem;min-width:150px}
+.stat .num{font-family:var(--disp);font-size:2rem;font-weight:800;background:var(--grad);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.8rem;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.scroll-hint{margin-top:3rem;color:var(--faint);font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(8px);opacity:1}}
+/* ---------- cards & panels ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.5rem}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+@media(max-width:720px){#themeToggle{top:66px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--ac,var(--grad))}
+.card.violet{--ac:linear-gradient(90deg,var(--purple-deep),var(--purple))}
+.card.lime{--ac:linear-gradient(90deg,var(--copper-deep),var(--copper))}
+.card.copper{--ac:linear-gradient(90deg,var(--copper-deep),var(--copper))}
+.card.purple{--ac:linear-gradient(90deg,var(--purple-deep),var(--purple))}
+.card.sky{--ac:linear-gradient(90deg,#0e7490,var(--sky))}
+.card.pink{--ac:linear-gradient(90deg,#be123c,var(--pink))}
+.card h3{font-family:var(--disp);font-size:1.35rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.01em}
+.card h3 .chem{font-size:.85rem;font-weight:600;color:var(--faint);letter-spacing:.08em}
+.card p, .card li{color:var(--muted);font-size:.99rem}
+.card ul{list-style:none;margin-top:.9rem;display:grid;gap:.65rem}
+.card ul li{padding-left:1.5rem;position:relative}
+.card ul li::before{content:"▸";position:absolute;left:0;color:var(--ac2,var(--purple));font-weight:800}
+.card.violet ul li::before{color:var(--purple)}
+.card.lime ul li::before{color:var(--copper)}
+.card strong{color:var(--ink)}
+.plain{margin-top:1.2rem;background:rgba(255,255,255,.035);border:1px dashed rgba(255,255,255,.22);
+  border-radius:12px;padding:1rem 1.2rem;font-size:.96rem;color:var(--muted)}
+.plain b{color:var(--ink)}
+.plain .plabel{display:block;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--copper);margin-bottom:.35rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.8rem;margin-bottom:1.4rem}
+.panel h3{font-family:var(--disp);font-size:1.3rem;font-weight:800;margin-bottom:.8rem}
+.panel p{color:var(--muted);margin-bottom:.8rem}
+.panel p strong, .panel li strong{color:var(--ink)}
+.kv{display:flex;gap:.9rem;align-items:flex-start;padding:.9rem 0;border-top:1px solid var(--line)}
+.kv:first-of-type{border-top:none}
+.kv .k{flex:0 0 auto;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .7rem;border-radius:8px;margin-top:.25rem}
+.kv .k.v{background:rgba(183,155,255,.14);color:var(--purple);border:1px solid rgba(183,155,255,.35)}
+.kv .k.l{background:rgba(240,151,60,.12);color:var(--copper);border:1px solid rgba(240,151,60,.35)}
+.kv .k.s{background:rgba(95,157,255,.12);color:var(--sky);border:1px solid rgba(95,157,255,.35)}
+.kv .k.p{background:rgba(251,113,133,.12);color:var(--pink);border:1px solid rgba(251,113,133,.35)}
+.mtag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:.22rem .6rem;border-radius:999px;margin-left:.5rem;vertical-align:middle;white-space:nowrap}
+.mtag.claimed{background:rgba(251,191,36,.14);color:var(--amber);border:1px solid rgba(251,191,36,.4)}
+.mtag.grounded{background:rgba(95,157,255,.14);color:var(--sky);border:1px solid rgba(95,157,255,.4)}
+.mtag.gap{background:rgba(251,113,133,.14);color:var(--pink);border:1px solid rgba(251,113,133,.4)}
+.kv .k.a{background:rgba(251,191,36,.12);color:var(--amber);border:1px solid rgba(251,191,36,.35)}
+.kv .k.r{background:rgba(251,113,133,.12);color:var(--pink);border:1px solid rgba(251,113,133,.35)}
+.kv p{font-size:.99rem}
+/* ---------- diagram frames ---------- */
+.diagram{background:radial-gradient(600px 300px at 50% 0%,rgba(124,58,237,.12),transparent 70%),#090b15;
+  border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem;margin:0 0 1.4rem;overflow:hidden}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram .cap{text-align:center;color:var(--faint);font-size:.85rem;margin-top:.9rem;letter-spacing:.03em}
+.flow{stroke-dasharray:6 7;animation:dashmove 1.6s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-26}}
+.float-slow{animation:floaty 5s ease-in-out infinite}
+.float-slower{animation:floaty 7s ease-in-out infinite reverse}
+.spin-slow{animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin-slow{animation:none}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.glow-pulse{animation:glowp 2.8s ease-in-out infinite}
+@keyframes glowp{0%,100%{opacity:.55}50%{opacity:1}}
+.drift{animation:drift 7s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+.sprout{stroke-dasharray:120;stroke-dashoffset:120;transition:stroke-dashoffset 2.2s ease .3s}
+.in .sprout{stroke-dashoffset:0}
+.travel{animation:travel 4.5s linear infinite}
+@keyframes travel{from{offset-distance:0%}to{offset-distance:100%}}
+/* ---------- evidence bars ---------- */
+.ebar{margin:1rem 0 1.4rem}
+.ebar .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem}
+.ebar .row .t{font-weight:700;font-size:.98rem}
+.ebar .row .v{font-size:.88rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.ebar .track{height:14px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.ebar .fill{height:100%;width:0;border-radius:999px;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+.in .ebar .fill{width:var(--w)}
+.ebar .note{font-size:.85rem;color:var(--faint);margin-top:.45rem}
+/* ---------- anecdotes ---------- */
+.anec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+@media(max-width:720px){.anec-grid{grid-template-columns:1fr}}
+.anec{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.4rem;position:relative}
+.anec .stamp{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.12em;
+  color:var(--amber);border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.08);
+  padding:.28rem .6rem;border-radius:7px;text-transform:uppercase;margin-bottom:.65rem}
+.anec h4{font-size:1.05rem;font-weight:800;margin-bottom:.5rem}
+.anec-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.55rem}
+.anec-head .thumb{flex:0 0 auto;width:54px;height:54px;border-radius:14px;border:1px solid var(--line)}
+.anec-head h4{margin-bottom:0}
+.anec p{color:var(--muted);font-size:.95rem}
+.anec p strong{color:var(--ink)}
+.anec .caveat{margin-top:.8rem;font-size:.82rem;color:var(--faint);border-top:1px dashed var(--line);padding-top:.7rem}
+.anec{overflow:hidden}
+.anec::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.folk-note{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:var(--radius);
+  padding:1.2rem 1.4rem;margin-bottom:1.6rem;color:var(--muted);font-size:.98rem}
+.folk-note strong{color:var(--amber)}
+</style>
+<style>
+/* ---------- glossary accordion ---------- */
+.gloss{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--card)}
+.g-item{border-bottom:1px solid var(--line)}
+.g-item:last-child{border-bottom:none}
+.g-q{width:100%;background:none;border:none;color:var(--ink);font-family:var(--font);font-size:1.02rem;font-weight:700;
+  text-align:left;padding:1.05rem 1.4rem;cursor:pointer;display:flex;justify-content:flex-start;align-items:center;gap:1rem}
+.g-q:hover{background:rgba(255,255,255,.03)}
+.g-q .term{color:var(--purple)}
+.g-item:nth-child(even) .g-q .term{color:var(--copper)}
+.g-q .plus{flex:0 0 auto;width:1.7rem;height:1.7rem;border-radius:50%;border:1px solid var(--line);margin-left:auto;
+  display:inline-flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--muted);transition:all .3s}
+.g-item.open .g-q .plus{transform:rotate(45deg);background:var(--grad);color:#0a0c14;border-color:transparent}
+.gthumb{flex:0 0 auto;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);
+  animation:gaFloat 5s ease-in-out infinite}
+.gthumb.v2{animation:gaBreathe 4.4s ease-in-out infinite}
+.gthumb.v3{animation:gaTilt 6s ease-in-out infinite}
+@keyframes gaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes gaBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes gaTilt{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.g-a{max-height:0;overflow:hidden;transition:max-height .45s ease}
+.g-a .gsci,.g-a .gex{padding:0 1.4rem 1rem;color:var(--muted);font-size:.95rem}
+.g-a .gsci strong,.g-a .gex strong{color:var(--ink)}
+.gslabel{display:block;font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:.35rem}
+.g-a .gex{margin:0 1.4rem 1rem;padding:0 0 0 1rem;border-left:2px solid var(--line)}
+.g-a .plain{margin:0 1.4rem 1.3rem}
+/* ---------- takeaways ---------- */
+.takes{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+@media(max-width:720px){.takes{grid-template-columns:1fr}}
+.take{background:var(--card2);border:1px solid var(--line);border-radius:var(--radius);padding:1.4rem;display:flex;gap:1rem}
+.take .ic{flex:0 0 auto;width:2.6rem;height:2.6rem;border-radius:12px;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;font-size:1.25rem;
+  animation:icBob 4.5s ease-in-out infinite}
+.takes .take:nth-child(2) .ic{animation-delay:-1.2s}
+.takes .take:nth-child(3) .ic{animation-delay:-2.1s}
+.takes .take:nth-child(4) .ic{animation-delay:-.6s}
+.takes .take:nth-child(5) .ic{animation-delay:-3s}
+.takes .take:nth-child(6) .ic{animation-delay:-1.8s}
+@keyframes icBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.take h4{font-size:1.02rem;font-weight:800;margin-bottom:.35rem}
+.take p{color:var(--muted);font-size:.94rem}
+/* ---------- limits + disclaimer ---------- */
+.limits{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem;margin-bottom:1rem}
+.limits h3{font-size:1.15rem;font-weight:800;margin-bottom:.8rem}
+.limits ul{list-style:none;display:grid;gap:.6rem;color:var(--muted);font-size:.97rem}
+.limits li{padding-left:1.5rem;position:relative}
+.limits li::before{content:"—";position:absolute;left:0;color:var(--faint)}
+.limits strong{color:var(--ink)}
+footer.disclaimer{position:relative;z-index:1;margin:3rem 0 0;background:#05060b;border-top:1px solid var(--line);padding:3.2rem 0}
+footer.disclaimer .wrap{max-width:960px}
+footer.disclaimer h2{font-size:1.4rem;margin-bottom:1.2rem}
+footer.disclaimer .dbox{border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.05);
+  border-radius:var(--radius);padding:1.5rem 1.6rem;margin-bottom:1.4rem}
+footer.disclaimer .dbox p{color:var(--muted);font-size:.93rem;margin-bottom:.8rem}
+footer.disclaimer .dbox p:last-child{margin-bottom:0}
+footer.disclaimer .dbox strong{color:var(--ink)}
+footer.disclaimer .fine{color:var(--faint);font-size:.82rem;display:grid;gap:.6rem}
+footer.disclaimer .fine strong{color:var(--muted)}
+.foot-sign{margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:.6rem;color:var(--faint);font-size:.82rem}
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+/* ---------- misc ---------- */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:1rem 0}
+.num-badge{display:inline-flex;align-items:center;justify-content:center;min-width:2.4rem;height:2.4rem;padding:0 .6rem;
+  border-radius:12px;background:var(--grad);color:#0a0c14;font-weight:800;font-size:1rem;margin-right:.6rem;vertical-align:middle}
+.callout{border-left:3px solid;border-image:linear-gradient(180deg,var(--purple),var(--copper)) 1;
+  padding:.4rem 0 .4rem 1.2rem;margin:1.4rem 0;color:var(--muted);font-size:1rem}
+.callout strong{color:var(--ink)}
+@media(max-width:560px){
+  body{font-size:1rem}
+  section.chapter{padding:3rem 0 .5rem}
+  .hero{padding:4rem 1.25rem 2.5rem}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .flow,.float-slow,.float-slower,.glow-pulse,.travel,.drift,.gthumb,.orb,.take .ic,.hero h1 .g{animation:none}
+  .sprout{transition:none}
+  .toc-pill{transition:none}
+  .scroll-hint{animation:none}
+  #dots{display:none}
+}
+/* ---------- sidebar TOC (desktop) ---------- */
+.toc{display:none}
+@media(min-width:1200px){
+  nav.chapters{display:none}
+  body{padding-left:248px}
+  .toc{display:flex;position:fixed;left:0;top:0;bottom:0;width:248px;z-index:45;
+    flex-direction:column;justify-content:center;gap:.2rem;
+    padding:2rem 1.1rem 2rem 1.4rem;
+    background:rgba(6,7,13,.72);backdrop-filter:blur(14px);
+    border-right:1px solid var(--line)}
+  .toc .brand{font-family:var(--disp);font-weight:800;font-size:.98rem;letter-spacing:-.01em;
+    margin-bottom:1.2rem;line-height:1.35;color:var(--ink);
+    text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+  .toc .brand .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .toc a{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--muted);
+    font-size:.86rem;font-weight:600;padding:.55rem .7rem;border-radius:10px;
+    border:1px solid transparent;transition:all .22s ease}
+  .toc a .n{font-size:.72rem;font-weight:800;color:var(--faint);width:1.7rem;flex:0 0 auto;
+    font-variant-numeric:tabular-nums;letter-spacing:.04em}
+  .toc a:hover{color:var(--ink);background:rgba(255,255,255,.045)}
+  .toc a.active{color:#0a0c14;font-weight:700}
+  .toc a.active .n{color:#0a0c14}
+  .toc a{position:relative;z-index:1}
+  .toc-pill{position:absolute;left:1.4rem;top:0;width:calc(100% - 2.5rem);height:40px;border-radius:10px;
+    background:var(--grad);z-index:0;opacity:0;pointer-events:none;
+    transition:transform .5s cubic-bezier(.25,.8,.25,1),opacity .35s ease,height .3s ease}
+  .toc .mini{margin-top:1.5rem;font-size:.7rem;color:var(--faint);letter-spacing:.14em;
+    text-transform:uppercase;font-weight:700;display:flex;justify-content:space-between;align-items:baseline}
+  .toc .mini #tocPct{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+    font-size:.85rem;font-weight:800;letter-spacing:0;font-variant-numeric:tabular-nums}
+  .toc .mini-bar{height:3px;background:rgba(255,255,255,.08);border-radius:99px;margin-top:.55rem;overflow:hidden}
+  .toc .mini-bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px}
+}
+/* ---------- theme toggle button ---------- */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:70;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:transform .25s ease,background .25s ease;
+  box-shadow:0 4px 18px rgba(0,0,0,.25)}
+#themeToggle:hover{transform:scale(1.08)}
+#themeToggle:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+#themeToggle svg{width:20px;height:20px}
+[data-theme="dark"] #themeToggle .ic-sun{display:block}
+[data-theme="dark"] #themeToggle .ic-moon{display:none}
+[data-theme="light"] #themeToggle .ic-sun{display:none}
+[data-theme="light"] #themeToggle .ic-moon{display:block}
+[data-theme="dark"]{color-scheme:dark}
+nav.chapters .rail{padding-right:3.8rem}
+/* ---------- light theme: soft gray, easy on the eyes ---------- */
+[data-theme="light"]{
+  --bg0:#e3e3e0; --bg1:#d7d7d3;
+  --ink:#232322; --muted:#5b5b57; --faint:#8b8b85;
+  --purple:#6d28d9; --purple-deep:#5b21b6;
+  --copper:#b45309; --copper-deep:#8a3f0a;
+  --amber:#b45309; --pink:#be123c; --sky:#0e7490;
+  --card:#ececea; --card2:#e2e2de;
+  --line:rgba(35,35,35,.16);
+  --grad:linear-gradient(100deg,#b45309 0%,#be123c 34%,#6d28d9 67%,#0e7490 100%);
+  color-scheme:light;
+}
+[data-theme="light"] .bg-grad{background:
+  radial-gradient(900px 620px at 12% -6%, rgba(124,58,237,.10), transparent 60%),
+  radial-gradient(820px 600px at 88% 22%, rgba(101,163,13,.10), transparent 60%),
+  radial-gradient(1000px 800px at 50% 110%, rgba(56,89,199,.08), transparent 62%),
+  radial-gradient(700px 500px at 78% 78%, rgba(190,24,93,.06), transparent 60%)}
+[data-theme="light"] nav.chapters{background:rgba(227,227,224,.88)}
+[data-theme="light"] .toc{background:rgba(227,227,224,.85)}
+[data-theme="light"] .diagram{background:radial-gradient(600px 300px at 50% 0%,rgba(124,58,237,.08),transparent 70%),#e8e8e5}
+[data-theme="light"] footer.disclaimer{background:#d4d4d0}
+[data-theme="light"] .ebar .track{background:rgba(35,35,35,.10)}
+[data-theme="light"] .plain{border-color:rgba(35,35,35,.35)}
+[data-theme="light"] .limits{background:rgba(35,35,35,.05)}
+[data-theme="light"] .quickread{background:rgba(255,255,255,.45)}
+[data-theme="light"] #themeToggle{box-shadow:0 4px 18px rgba(35,35,35,.2)}
+[data-theme="light"] .card::before{opacity:.85}
+/* recolor hardcoded SVG fills/strokes for light backgrounds */
+[data-theme="light"] svg [fill="#b79bff"]{fill:#6d28d9}
+[data-theme="light"] svg [fill="#f0973c"]{fill:#8a3f0a}
+[data-theme="light"] svg [fill="#7f88a5"]{fill:#716c5e}
+[data-theme="light"] svg [fill="#a9b1c9"]{fill:#57534a}
+[data-theme="light"] svg [fill="#edf0f9"]{fill:#26221a}
+[data-theme="light"] svg [fill="#fb7185"]{fill:#e11d48}
+[data-theme="light"] svg [fill="#3a4160"]{fill:#d9d3c1}
+[data-theme="light"] svg [stroke="#b79bff"]{stroke:#6d28d9}
+[data-theme="light"] svg [stroke="#f0973c"]{stroke:#8a3f0a}
+[data-theme="light"] svg [stroke="#edf0f9"]{stroke:#57534a}
+[data-theme="light"] svg [stroke="#3a4160"]{stroke:#d9d3c1}
+</style>
+</head>
+<body>
+<div class="bg-grad"></div>
+<canvas id="dots" aria-hidden="true"></canvas>
+<div class="orb o1" aria-hidden="true"></div>
+<div class="orb o2" aria-hidden="true"></div>
+<div class="orb o3" aria-hidden="true"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div id="doneToast" role="status">🎉 You reached the end — nice work getting through it all.</div>
+<div id="progress"></div>
+<button id="themeToggle" aria-label="Toggle light / dark mode" title="Toggle light / dark mode">
+  <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<nav class="chapters" aria-label="Page chapters">
+  <div class="rail" id="rail">
+    <a href="#ch1" data-spy="ch1">The Four</a>
+    <a href="#ch2" data-spy="ch2">Origin Story</a>
+    <a href="#ch3" data-spy="ch3">Claimed Mechanisms</a>
+    <a href="#ch4" data-spy="ch4">Evidence Check</a>
+    <a href="#ch5" data-spy="ch5">What People Say</a>
+    <a href="#ch6" data-spy="ch6">Protocol Talk</a>
+    <a href="#ch7" data-spy="ch7">Risks &amp; Unknowns</a>
+    <a href="#ch8" data-spy="ch8">Glossary</a>
+    <a href="#ch9" data-spy="ch9">Takeaways</a>
+    <a href="#ch10" data-spy="ch10">Limits</a>
+  </div>
+</nav>
+
+<aside class="toc" aria-label="Table of contents">
+  <div class="toc-pill" aria-hidden="true"></div>
+  <div class="brand">The <span class="g">KLOW</span> Stack</div>
+  <a href="#ch1" data-spy="ch1"><span class="n">01</span>The Four</a>
+  <a href="#ch2" data-spy="ch2"><span class="n">02</span>Origin Story</a>
+  <a href="#ch3" data-spy="ch3"><span class="n">03</span>Claimed Mechanisms</a>
+  <a href="#ch4" data-spy="ch4"><span class="n">04</span>Evidence Check</a>
+  <a href="#ch5" data-spy="ch5"><span class="n">05</span>What People Say</a>
+  <a href="#ch6" data-spy="ch6"><span class="n">06</span>Protocol Talk</a>
+  <a href="#ch7" data-spy="ch7"><span class="n">07</span>Risks &amp; Unknowns</a>
+  <a href="#ch8" data-spy="ch8"><span class="n">08</span>Glossary</a>
+  <a href="#ch9" data-spy="ch9"><span class="n">09</span>Takeaways</a>
+  <a href="#ch10" data-spy="ch10"><span class="n">10</span>Limits</a>
+  <div class="mini">Reading progress <span id="tocPct">0%</span></div>
+  <div class="mini-bar"><i id="tocProg"></i></div>
+</aside>
+
+<header class="hero">
+  <div class="badge"><span class="dot"></span> Investigational · Not FDA-approved · Educational only</div>
+  <h1>The <span class="g">KLOW</span> Stack</h1>
+  <p class="sub"><strong>GHK-Cu + BPC-157 + TB-500 + KPV</strong> — four investigational peptides in one stack: three aimed at repair, one aimed at inflammation. This page walks through what each compound is, where the idea came from, what the science actually supports, and what people online report. <strong>Claims vs. evidence, side by side.</strong></p>
+  <div class="quickread reveal">
+    <span class="tag">The short version</span>
+    <p><strong>Four investigational compounds, zero human trials of the stack itself.</strong> KLOW is the GLOW stack (GHK-Cu + BPC-157 + TB-500) with KPV added — the fourth compound targets inflammation while the other three target repair. None of the four is FDA-approved as a medicine; BPC-157 and TB-500 are banned in tested sport. Nothing here is medical advice or a recommendation to use anything.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat reveal"><div class="num" data-count="4">0</div><div class="lbl">peptides in the stack</div></div>
+    <div class="stat reveal d1"><div class="num" data-count="80">0</div><div class="lbl">mg in the reference blend</div></div>
+    <div class="stat reveal d2"><div class="num" data-count="0">0</div><div class="lbl">human trials of the stack itself</div></div>
+    <div class="stat reveal d3"><div class="num" data-count="3">0</div><div class="lbl">amino acids in KPV — the tiny one</div></div>
+  </div>
+  <div class="scroll-hint">Scroll &nbsp;↓</div>
+</header>
+
+<main class="wrap">
+<!-- ================= CHAPTER 1 : MEET THE TWO ================= -->
+<section class="chapter" id="ch1">
+  <div class="eyebrow reveal"><span class="n">01</span> Meet the four</div>
+  <h2 class="reveal">Four compounds, <span class="hl">one stack</span></h2>
+  <p class="lede reveal">KLOW is a four-peptide blend discussed and sold as a single stack: <strong>GHK-Cu + BPC-157 + TB-500 + KPV</strong>. The reference blend totals 80mg — half of it GHK-Cu, with the other three at 10mg each. Three of the four are aimed at <em>repair</em>; the fourth, KPV, is aimed at <em>inflammation</em>. <strong>None of the four is FDA-approved as a medicine.</strong></p>
+
+  <div class="diagram reveal">
+    <svg viewBox="0 0 900 250" role="img" aria-label="Stacked bar showing the 80mg reference blend: GHK-Cu 50mg, BPC-157 10mg, TB-500 10mg, KPV 10mg">
+      <text x="450" y="30" text-anchor="middle" fill="#a9b1c9" font-size="15" font-family="inherit">The reference 80mg blend — proportions, not a recommendation</text>
+      <g class="float-slow">
+        <rect x="60" y="60" width="487" height="64" rx="14" fill="rgba(240,151,60,.16)" stroke="#f0973c" stroke-width="2"/>
+        <text x="303" y="88" text-anchor="middle" fill="#f0973c" font-size="19" font-weight="800" font-family="inherit">GHK-Cu · 50mg</text>
+        <text x="303" y="110" text-anchor="middle" fill="#a9b1c9" font-size="13" font-family="inherit">3 amino acids + copper</text>
+        <rect x="555" y="60" width="97" height="64" rx="14" fill="rgba(183,155,255,.14)" stroke="#b79bff" stroke-width="2"/>
+        <text x="603" y="88" text-anchor="middle" fill="#b79bff" font-size="15" font-weight="800" font-family="inherit">10mg</text>
+        <text x="603" y="110" text-anchor="middle" fill="#a9b1c9" font-size="12" font-family="inherit">BPC-157</text>
+        <rect x="660" y="60" width="97" height="64" rx="14" fill="rgba(95,157,255,.14)" stroke="#5f9dff" stroke-width="2"/>
+        <text x="708" y="88" text-anchor="middle" fill="#5f9dff" font-size="15" font-weight="800" font-family="inherit">10mg</text>
+        <text x="708" y="110" text-anchor="middle" fill="#a9b1c9" font-size="12" font-family="inherit">TB-500</text>
+        <rect x="765" y="60" width="97" height="64" rx="14" fill="rgba(251,113,133,.14)" stroke="#fb7185" stroke-width="2"/>
+        <text x="813" y="88" text-anchor="middle" fill="#fb7185" font-size="15" font-weight="800" font-family="inherit">10mg</text>
+        <text x="813" y="110" text-anchor="middle" fill="#a9b1c9" font-size="12" font-family="inherit">KPV</text>
+      </g>
+      <g font-size="13" font-family="inherit" fill="#7f88a5">
+        <text x="60" y="150">GHK-Cu — copper tripeptide, the bulk of the blend</text>
+        <text x="60" y="172">BPC-157 — 15 amino acids, stomach-protein fragment</text>
+        <text x="60" y="194">TB-500 — 7 amino acids, thymosin beta-4 fragment</text>
+        <text x="60" y="216">KPV — 3 amino acids, tail of the alpha-MSH hormone</text>
+      </g>
+    </svg>
+    <div class="cap">The 80/10/10/10 split is how the blend is commonly described by sellers — a product fact, not a dosing suggestion.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card copper reveal">
+      <h3>GHK-Cu <span class="chem">· copper tripeptide</span></h3>
+      <ul>
+        <li><strong>3 amino acids</strong> (Gly-His-Lys) gripping a <strong>copper</strong> ion — a molecule your own blood carries, declining ~60% from age 20 to 60.</li>
+        <li><strong>Proposed</strong> job: ferrying copper to enzymes that build <strong>collagen and elastin</strong> — the skin-and-tissue lane of the stack.</li>
+        <li>The only one of the four with <strong>real (small) human trials</strong> — mostly topical, mostly skin.</li>
+        <li>Cosmetic ingredient; <strong>not FDA-approved as a drug</strong> — and notably <strong>not on WADA's banned list</strong>.</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>The skin-and-collagen member.</b> A copper-carrying fragment your body already makes, proposed to feed the enzymes that stitch skin and tissue together.</div>
+    </div>
+    <div class="card purple reveal d1">
+      <h3>BPC-157 <span class="chem">· Body Protection Compound</span></h3>
+      <ul>
+        <li><strong>15 amino acids</strong> copied from a protective protein found in human stomach juice.</li>
+        <li><strong>Proposed</strong> jobs: nudging new tiny blood vessels to grow, calming inflammatory signals, cueing tendon and connective-tissue repair.</li>
+        <li>Evidence is <strong>35-of-36 preclinical</strong> per a 2025 review — animals and cells, essentially no robust human trials.</li>
+        <li><strong>Not FDA-approved; banned in tested sport</strong> (WADA S0, non-approved substances).</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>The gut-and-tendon member.</b> A stomach-protein fragment studied for repair signaling — interesting in rats, unproven in people.</div>
+    </div>
+    <div class="card sky reveal">
+      <h3>TB-500 <span class="chem">· thymosin beta-4 fragment</span></h3>
+      <ul>
+        <li><strong>7 amino acids</strong> — just the tip (units 17–23) of <strong>thymosin beta-4</strong>, a 43-unit protein in nearly every human cell.</li>
+        <li><strong>Proposed</strong> job: grabbing <strong>actin</strong> (cell scaffolding) to help repair cells <strong>migrate toward damage</strong>.</li>
+        <li>The <em>parent</em> protein reached Phase 2 trials — <strong>the 7-unit fragment itself has zero human trials</strong>.</li>
+        <li><strong>Not FDA-approved; banned in tested sport</strong> (WADA S2).</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>The cell-movement member.</b> A snippet of a near-universal cell protein, theorized to help repair crews travel to the injury — unproven in humans.</div>
+    </div>
+    <div class="card pink reveal d1">
+      <h3>KPV <span class="chem">· alpha-MSH fragment</span></h3>
+      <ul>
+        <li><strong>3 amino acids</strong> (Lys-Pro-Val) — the tail end of <strong>alpha-MSH</strong>, a hormone your pituitary makes.</li>
+        <li><strong>Proposed</strong> job: switching off <strong>NF-κB</strong>, the master alarm of inflammation — <em>without</em> the tanning/appetite effects of its parent.</li>
+        <li><strong>Zero human trials</strong>; strongest work is in mouse colitis models, going back to <strong>1989</strong>.</li>
+        <li><strong>Not FDA-approved</strong> — though an FDA advisory panel voted <strong>8–6 in July 2026</strong> to consider it for the compounding list.</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>The inflammation-brake member — the whole reason KLOW exists.</b> A three-bead snippet that quiets inflammatory alarms in lab studies, with no human data yet.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 2 : WHY STACK THEM ================= -->
+<section class="chapter" id="ch2">
+  <div class="eyebrow reveal"><span class="n">02</span> Origin story</div>
+  <h2 class="reveal">From <span class="hl">GLOW</span> to KLOW</h2>
+  <p class="lede reveal">KLOW didn't start as KLOW. It started as <strong>GLOW</strong> — the three-compound beauty-and-repair stack (GHK-Cu + BPC-157 + TB-500) that spread through wellness and biohacker circles. Then someone added a fourth compound for the missing piece — <strong>inflammation</strong> — and the four-letter name was born. <strong>KLOW and GLOW are community nicknames, not drug names.</strong></p>
+
+  <div class="diagram reveal">
+    <svg viewBox="0 0 900 300" role="img" aria-label="Timeline from the GLOW stack to KLOW with the addition of KPV">
+      <g font-family="inherit">
+        <g class="float-slow">
+          <rect x="40" y="90" width="240" height="120" rx="16" fill="rgba(240,151,60,.08)" stroke="#f0973c" stroke-width="2"/>
+          <text x="160" y="128" text-anchor="middle" fill="#f0973c" font-size="24" font-weight="800">GLOW</text>
+          <text x="160" y="154" text-anchor="middle" fill="#a9b1c9" font-size="13">GHK-Cu · BPC-157</text>
+          <text x="160" y="174" text-anchor="middle" fill="#a9b1c9" font-size="13">TB-500</text>
+          <text x="160" y="194" text-anchor="middle" fill="#7f88a5" font-size="12">the repair trio</text>
+        </g>
+        <g class="glow-pulse">
+          <text x="330" y="158" text-anchor="middle" fill="#fb7185" font-size="34" font-weight="800">+</text>
+          <text x="330" y="182" text-anchor="middle" fill="#7f88a5" font-size="12">the missing piece</text>
+        </g>
+        <g class="float-slower">
+          <rect x="380" y="90" width="150" height="120" rx="16" fill="rgba(251,113,133,.10)" stroke="#fb7185" stroke-width="2"/>
+          <text x="455" y="138" text-anchor="middle" fill="#fb7185" font-size="24" font-weight="800">KPV</text>
+          <text x="455" y="164" text-anchor="middle" fill="#a9b1c9" font-size="13">the inflammation</text>
+          <text x="455" y="184" text-anchor="middle" fill="#a9b1c9" font-size="13">brake</text>
+        </g>
+        <g class="glow-pulse">
+          <text x="580" y="158" text-anchor="middle" fill="#edf0f9" font-size="30" font-weight="800">=</text>
+        </g>
+        <g class="float-slow">
+          <rect x="620" y="70" width="240" height="160" rx="16" fill="rgba(95,157,255,.08)" stroke="#5f9dff" stroke-width="2.5"/>
+          <text x="740" y="118" text-anchor="middle" fill="#5f9dff" font-size="28" font-weight="800">KLOW</text>
+          <text x="740" y="146" text-anchor="middle" fill="#a9b1c9" font-size="13">GHK-Cu · BPC-157</text>
+          <text x="740" y="166" text-anchor="middle" fill="#a9b1c9" font-size="13">TB-500 · KPV</text>
+          <text x="740" y="192" text-anchor="middle" fill="#7f88a5" font-size="12">repair + inflammation</text>
+          <text x="740" y="210" text-anchor="middle" fill="#7f88a5" font-size="12">in one stack</text>
+        </g>
+      </g>
+      <text x="450" y="272" text-anchor="middle" fill="#7f88a5" font-size="14" font-family="inherit">July 2026: FDA advisory panel discussed BPC-157, KPV &amp; TB-500 for the 503A compounding list — KPV won an 8–6 vote.</text>
+    </svg>
+    <div class="cap">The pitch: three compounds rebuild, the fourth keeps inflammation from blocking the rebuild.</div>
+  </div>
+
+  <div class="panel reveal">
+    <h3>How the name happened</h3>
+    <div class="kv"><span class="k l">The GLOW base</span><p>The original trio was framed around <strong>skin, beauty, and tissue repair</strong> — GHK-Cu for collagen, BPC-157 and TB-500 for recovery. The name promised a look, not a mechanism.</p></div>
+    <div class="kv"><span class="k p">The K addition</span><p>Adding <strong>KPV</strong> shifted the story from looks to <strong>inflammation and gut–skin signaling</strong> — the idea being that repair can't take hold while inflammatory alarms are blaring.</p></div>
+    <div class="kv"><span class="k s">The name</span><p><strong>Community shorthand</strong> for which compounds are in the vial — the letters trace to the constituents. It describes a shopping list, not an outcome; neither KLOW nor GLOW is an approved drug name.</p></div>
+    <div class="kv"><span class="k a">The 2026 moment</span><p>By 2026 the stack had gone <strong>commercial</strong>: pre-mixed blends, compounded versions, and research-chemical vials. In July 2026 the FDA's compounding advisory committee discussed three of the four compounds — a real regulatory milestone, even though the vote was <strong>non-binding</strong>.</p></div>
+    <div class="kv"><span class="k r">Reality check</span><p>A catchy name and a tidy story are <strong>marketing</strong>, not evidence. No trial has ever tested the four together — the stack exists because the <em>theory</em> sounds complete.</p></div>
+    <div class="plain"><span class="plabel">Plain English</span><b>GLOW was the repair trio; KLOW is GLOW plus an inflammation-brake.</b> The name is a nickname for a four-item shopping list — it tells you what's in the vial, not what the vial does.</div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 3 : MECHANISMS ================= -->
+<section class="chapter" id="ch3">
+  <div class="eyebrow reveal"><span class="n">03</span> Claimed mechanisms</div>
+  <h2 class="reveal">How it's <span class="hl">claimed</span> to work</h2>
+  <p class="lede reveal">Four compounds, four proposed jobs — plus one big claim about how they work <em>together</em>. Every tag below tells you the confidence level: <strong>grounded</strong> means textbook biochemistry, <strong>claimed</strong> means proposed from animal/cell work, <strong>gap</strong> means asserted with no data at all.</p>
+
+  <div class="diagram reveal">
+    <svg viewBox="0 0 900 320" role="img" aria-label="Diagram of the four proposed mechanism lanes converging on a repair environment, with KPV dampening inflammation">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill="#a9b1c9"/>
+        </marker>
+      </defs>
+      <g font-family="inherit">
+        <g class="float-slow">
+          <circle cx="120" cy="70" r="34" fill="rgba(240,151,60,.14)" stroke="#f0973c" stroke-width="2"/>
+          <text x="120" y="66" text-anchor="middle" fill="#f0973c" font-size="13" font-weight="800">GHK-Cu</text>
+          <text x="120" y="84" text-anchor="middle" fill="#a9b1c9" font-size="11">copper → enzymes</text>
+        </g>
+        <g class="float-slower">
+          <circle cx="120" cy="160" r="34" fill="rgba(183,155,255,.12)" stroke="#b79bff" stroke-width="2"/>
+          <text x="120" y="156" text-anchor="middle" fill="#b79bff" font-size="13" font-weight="800">BPC-157</text>
+          <text x="120" y="174" text-anchor="middle" fill="#a9b1c9" font-size="11">vessels + signals</text>
+        </g>
+        <g class="float-slow">
+          <circle cx="120" cy="250" r="34" fill="rgba(95,157,255,.12)" stroke="#5f9dff" stroke-width="2"/>
+          <text x="120" y="246" text-anchor="middle" fill="#5f9dff" font-size="13" font-weight="800">TB-500</text>
+          <text x="120" y="264" text-anchor="middle" fill="#a9b1c9" font-size="11">cells migrate</text>
+        </g>
+        <g>
+          <line x1="160" y1="70" x2="400" y2="140" stroke="#f0973c" stroke-width="2" stroke-dasharray="6 6" class="flow" marker-end="url(#ah)"/>
+          <line x1="160" y1="160" x2="400" y2="155" stroke="#b79bff" stroke-width="2" stroke-dasharray="6 6" class="flow" marker-end="url(#ah)"/>
+          <line x1="160" y1="250" x2="400" y2="175" stroke="#5f9dff" stroke-width="2" stroke-dasharray="6 6" class="flow" marker-end="url(#ah)"/>
+        </g>
+        <g class="glow-pulse">
+          <circle cx="480" cy="160" r="72" fill="rgba(237,240,249,.04)" stroke="#edf0f9" stroke-width="2"/>
+          <text x="480" y="152" text-anchor="middle" fill="#edf0f9" font-size="15" font-weight="800">REPAIR</text>
+          <text x="480" y="172" text-anchor="middle" fill="#edf0f9" font-size="15" font-weight="800">ENVIRONMENT</text>
+          <text x="480" y="192" text-anchor="middle" fill="#7f88a5" font-size="11">the pitch: all three</text>
+          <text x="480" y="206" text-anchor="middle" fill="#7f88a5" font-size="11">at once</text>
+        </g>
+        <g class="float-slow">
+          <circle cx="740" cy="160" r="40" fill="rgba(251,113,133,.10)" stroke="#fb7185" stroke-width="2"/>
+          <text x="740" y="156" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="800">KPV</text>
+          <text x="740" y="174" text-anchor="middle" fill="#a9b1c9" font-size="11">brake on</text>
+          <text x="740" y="188" text-anchor="middle" fill="#a9b1c9" font-size="11">inflammation</text>
+          <path d="M692 160 h-52" stroke="#fb7185" stroke-width="3" stroke-dasharray="6 5" class="flow"/>
+          <path d="M628 150 l14 10 l-14 10" fill="none" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+          <text x="740" y="246" text-anchor="middle" fill="#7f88a5" font-size="12" font-family="inherit">NF-κB alarm → quieted</text>
+          <text x="740" y="264" text-anchor="middle" fill="#7f88a5" font-size="12" font-family="inherit">(proposed, animal work)</text>
+        </g>
+      </g>
+    </svg>
+    <div class="cap">Three lanes feed the "repair environment"; KPV is drawn as a brake on the inflammation that would block it.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card copper reveal">
+      <h3>Copper delivery <span class="mtag grounded">Grounded</span></h3>
+      <ul>
+        <li>GHK <strong>binds copper tightly</strong> and hands it to enzymes that need it — <strong>lysyl oxidase</strong> (stitches collagen/elastin) and <strong>SOD</strong> (antioxidant defense).</li>
+        <li>This part is <strong>textbook biochemistry</strong>, not stack hype: copper's role in these enzymes is long established.</li>
+        <li>The <em>extra</em> claim — that GHK-Cu "resets" thousands of genes toward youth — is <strong>lab-dish work with debated meaning</strong>.</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>The copper-delivery part is solid science.</b> Your body really does use copper this way; GHK is one of its couriers. The gene-reset talk is a much bigger claim on much thinner ice.</div>
+    </div>
+    <div class="card purple reveal d1">
+      <h3>Vessel &amp; signal cues <span class="mtag claimed">Claimed</span></h3>
+      <ul>
+        <li>BPC-157 is <strong>proposed</strong> to nudge <strong>new capillary growth</strong> toward damaged tissue and modulate repair-related signaling molecules.</li>
+        <li>Also proposed: <strong>gut-lining support</strong>, tracing back to its origin in a stomach protein.</li>
+        <li>Nearly all of this comes from <strong>rodent and cell studies</strong> — no confirmed mechanism in humans.</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>"Might encourage blood-vessel growth and repair signals" — in rats.</b> Plausible, interesting, and completely unconfirmed in people.</div>
+    </div>
+    <div class="card sky reveal">
+      <h3>Cell migration <span class="mtag claimed">Claimed</span></h3>
+      <ul>
+        <li>TB-500 is <strong>proposed</strong> to bind <strong>G-actin</strong> (a building block of the cell's skeleton), freeing cells to <strong>crawl toward injury sites</strong>.</li>
+        <li>The parent protein does this job in the body — the claim is that the 7-unit fragment <strong>keeps the trick</strong>.</li>
+        <li>Demonstrated in <strong>cell and animal models only</strong>; the fragment's behavior in humans is unstudied.</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>The "repair crews travel faster" theory.</b> Borrowed from the parent protein's real job — but nobody has shown the fragment does it in a person.</div>
+    </div>
+    <div class="card pink reveal d1">
+      <h3>Inflammation brake <span class="mtag claimed">Claimed</span></h3>
+      <ul>
+        <li>KPV is <strong>proposed</strong> to enter gut and immune cells via the <strong>PepT1 transporter</strong> and block <strong>NF-κB</strong> — the master switch of inflammatory signaling.</li>
+        <li>Neat twist: PepT1 is <strong>upregulated in inflamed colon tissue</strong>, so inflamed areas may pull in more KPV — a self-targeting effect <em>in mice</em>.</li>
+        <li>Crucially, KPV <strong>skips the melanocortin receptors</strong> — so none of its parent hormone's tanning, appetite, or libido effects.</li>
+      </ul>
+      <div class="plain"><span class="plabel">Plain English</span><b>A chill signal for inflamed tissue.</b> In lab studies it turns down the cell's inflammation alarm without the side gigs of its parent hormone — and inflamed gut may soak up extra. All animal work so far.</div>
+    </div>
+  </div>
+
+  <div class="panel reveal">
+    <h3>The synergy claim <span class="mtag gap">Gap — no data</span></h3>
+    <div class="kv"><span class="k a">The pitch</span><p>Repair (three lanes) <strong>plus</strong> inflammation control (KPV) covers the whole healing equation at once — "a full healing environment instead of fixing one thing."</p></div>
+    <div class="kv"><span class="k r">The problem</span><p><strong>No study has ever tested the four together</strong> — not in animals, not in cells, not in people. Synergy is asserted from the tidiness of the story, not measured.</p></div>
+    <div class="plain"><span class="plabel">Plain English</span><b>"These sound like they'd work well together" is not a finding.</b> It's a hypothesis wearing a lab coat. Every synergy claim on this page should be read as marketing until a trial exists.</div>
+  </div>
+</section>
+<!-- ================= CHAPTER 4 : EVIDENCE CHECK ================= -->
+<section class="chapter" id="ch4">
+  <div class="eyebrow reveal"><span class="n">04</span> Honest evidence check</div>
+  <h2 class="reveal">What the research <span class="hl">actually</span> supports</h2>
+  <p class="lede reveal">Stack the enthusiasm of ten forums against the published research and the mismatch is stark. Here's each compound's evidence, scored honestly — <strong>bars show human-trial evidence</strong>, the currency that matters.</p>
+
+  <div class="panel reveal">
+    <h3>Human-trial evidence by compound</h3>
+    <div class="ebar"><div class="row"><span class="t">The 4-compound KLOW stack</span><span class="v">0 trials</span></div><div class="track"><div class="fill" style="--w:0%;background:linear-gradient(90deg,#f0973c,#fb7185)"></div></div><div class="note">No animal, cell, or human study of the four combined has ever been published.</div></div>
+    <div class="ebar"><div class="row"><span class="t">GHK-Cu — small human trials (skin)</span><span class="v">small, topical</span></div><div class="track"><div class="fill" style="--w:32%;background:linear-gradient(90deg,#a8621f,#f0973c)"></div></div><div class="note">Real but tiny trials on skin — the strongest human evidence of the four, and still thin.</div></div>
+    <div class="ebar"><div class="row"><span class="t">BPC-157 — robust human trials</span><span class="v">≈ 0</span></div><div class="track"><div class="fill" style="--w:3%;background:linear-gradient(90deg,#7c3aed,#b79bff)"></div></div><div class="note">35 of 36 published studies preclinical (2025 review). Essentially no controlled human data.</div></div>
+    <div class="ebar"><div class="row"><span class="t">TB-500 fragment — human trials</span><span class="v">0</span></div><div class="track"><div class="fill" style="--w:0%;background:linear-gradient(90deg,#0e7490,#5f9dff)"></div></div><div class="note">The 7-unit fragment itself: zero. Its 43-unit parent reached Phase 2 — a fragment is not the parent.</div></div>
+    <div class="ebar"><div class="row"><span class="t">KPV — human trials</span><span class="v">0</span></div><div class="track"><div class="fill" style="--w:0%;background:linear-gradient(90deg,#be123c,#fb7185)"></div></div><div class="note">Zero human trials as of late 2026 — but decades of animal work, the deepest of the four preclinically for inflammation.</div></div>
+  </div>
+
+  <div class="diagram reveal">
+    <svg viewBox="0 0 900 300" role="img" aria-label="Timeline of key KPV research milestones from 1989 to 2026">
+      <line x1="60" y1="150" x2="840" y2="150" stroke="#3a4160" stroke-width="3"/>
+      <g font-family="inherit" text-anchor="middle">
+        <g class="float-slow">
+          <circle cx="120" cy="150" r="12" fill="#fb7185"/>
+          <text x="120" y="120" fill="#fb7185" font-size="16" font-weight="800">1989</text>
+          <text x="120" y="190" fill="#a9b1c9" font-size="12">KPV calms inflammation</text>
+          <text x="120" y="208" fill="#7f88a5" font-size="11">in mice, steroid-level</text>
+        </g>
+        <g class="float-slower">
+          <circle cx="330" cy="150" r="12" fill="#fb7185"/>
+          <text x="330" y="120" fill="#fb7185" font-size="16" font-weight="800">2008</text>
+          <text x="330" y="190" fill="#a9b1c9" font-size="12">PepT1 transporter found:</text>
+          <text x="330" y="208" fill="#7f88a5" font-size="11">KPV enters gut cells,</text>
+          <text x="330" y="224" fill="#7f88a5" font-size="11">quiets colitis in mice</text>
+        </g>
+        <g class="float-slow">
+          <circle cx="540" cy="150" r="12" fill="#fb7185"/>
+          <text x="540" y="120" fill="#fb7185" font-size="16" font-weight="800">2010–17</text>
+          <text x="540" y="190" fill="#a9b1c9" font-size="12">Targeted delivery:</text>
+          <text x="540" y="208" fill="#7f88a5" font-size="11">nanoparticles concentrate</text>
+          <text x="540" y="224" fill="#7f88a5" font-size="11">KPV at inflamed colon</text>
+        </g>
+        <g class="float-slower">
+          <circle cx="760" cy="150" r="12" fill="#5f9dff"/>
+          <text x="760" y="120" fill="#5f9dff" font-size="16" font-weight="800">2026</text>
+          <text x="760" y="190" fill="#a9b1c9" font-size="12">FDA advisory 8–6 vote</text>
+          <text x="760" y="208" fill="#7f88a5" font-size="11">for compounding list</text>
+          <text x="760" y="224" fill="#7f88a5" font-size="11">(non-binding)</text>
+        </g>
+      </g>
+    </svg>
+    <div class="cap">KPV's research arc: 35+ years of animal work, zero human trials, one regulatory near-miss.</div>
+  </div>
+
+  <div class="panel reveal">
+    <h3>Status check — the non-negotiables</h3>
+    <div class="kv"><span class="k r">FDA</span><p><strong>None of the four is FDA-approved</strong> as a medicine for any use. All are investigational / research chemicals.</p></div>
+    <div class="kv"><span class="k r">WADA</span><p><strong>BPC-157 (S0) and TB-500 (S2) are banned in tested sport.</strong> GHK-Cu is not on the banned list; KPV's status is untested gray area. Tested athletes risk sanctions.</p></div>
+    <div class="kv"><span class="k a">Regulation</span><p>Blends move through <strong>unregulated gray-market channels</strong> — independent testing keeps finding mislabeled or contaminated vials in this space.</p></div>
+    <div class="plain"><span class="plabel">Plain English</span><b>Almost everything "known" comes from rats and petri dishes.</b> No human trials of the stack, no human trials of TB-500's fragment or KPV at all, and only small skin trials for GHK-Cu. The 2026 FDA vote was about <em>compounding access</em>, not approval — and it wasn't unanimous.</div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 5 : ANECDOTES ================= -->
+<section class="chapter" id="ch5">
+  <div class="eyebrow reveal"><span class="n">05</span> What people online say</div>
+  <h2 class="reveal">Forum reports: <span class="hl">stories, not data</span></h2>
+  <p class="lede reveal">Reddit threads, TikToks, and peptide forums are full of personal KLOW reports. They're worth reading as <strong>culture</strong> — what people hope for and believe — but they are not evidence. No controls, no verification, heavy survivorship bias: <strong>success stories get upvoted, “nothing happened” posts don't.</strong></p>
+
+  <div class="folk-note reveal"><strong>How to read this section:</strong> every card below is a <em>recurring theme</em> paraphrased from many anonymous posts — not quotes from identifiable people, and not claims this page endorses. Timelines people mention (“a few weeks”) are their impressions, not findings.</div>
+
+  <div class="anec-grid">
+    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(240,151,60,.12)"/><circle cx="32" cy="32" r="16" fill="none" stroke="#f0973c" stroke-width="3"/><path d="M24 32l5 5 11-11" stroke="#f0973c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 12l1.6 3.6 3.6 1.6-3.6 1.6L50 22.4l-1.6-3.6-3.6-1.6 3.6-1.6z" fill="#f0973c"/></svg>
+        <h4>The skin turnaround</h4>
+      </div>
+      <p>The most-shared KLOW stories are <strong>skin stories</strong>: posters describing angry, painful skin issues — sores, irritation, rough patches — that seemed to calm dramatically within weeks of starting the stack, sometimes with before-and-after photos.</p>
+      <div class="caveat">Caveat: Skin flares wax and wane on their own, photos are lit to impress, and nobody verifies what else changed. A dramatic skin story is still an n=1 with a camera.</div>
+    </div>
+    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(95,157,255,.12)"/><path d="M32 12a20 20 0 1 1-14 6" fill="none" stroke="#5f9dff" stroke-width="3.5" stroke-linecap="round"/><path d="M18 8v8h8" fill="none" stroke="#5f9dff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="6" fill="#5f9dff"/></svg>
+        <h4>The “recovery reset”</h4>
+      </div>
+      <p>Posters describing a <strong>whole-body reset feeling</strong> — old niggles quieting at once, training capacity creeping back, “I just feel normal again.” The four-in-one pitch makes people attribute <em>everything</em> improving to the stack.</p>
+      <div class="caveat">Caveat: When four compounds are taken together, any improvement gets credited to the stack and any non-improvement gets forgotten. Attribution with four variables and no controls is guesswork.</div>
+    </div>
+    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(251,113,133,.12)"/><path d="M20 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round"/><path d="M32 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round"/><path d="M44 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round"/></svg>
+        <h4>The gut calm</h4>
+      </div>
+      <p>The KPV angle shows up here: posters describing <strong>less bloating, calmer stomachs, fewer reactions to trigger foods</strong> over weeks — often people who say BPC-157 alone “wasn't enough” and credit the addition of KPV.</p>
+      <div class="caveat">Caveat: Gut symptoms swing with diet, stress, and time — the three things forum posters almost never control for. And crediting one of four compounds for a gut change is pure speculation.</div>
+    </div>
+    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(183,155,255,.12)"/><rect x="14" y="28" width="20" height="9" rx="4.5" fill="#b79bff" transform="rotate(-24 24 32)"/><rect x="32" y="28" width="20" height="9" rx="4.5" fill="#b79bff" transform="rotate(24 42 32)"/><circle cx="33" cy="33" r="6" fill="#f0973c"/></svg>
+        <h4>The injury comeback</h4>
+      </div>
+      <p>Lifters and runners describing <strong>tendon, elbow, shoulder, or knee complaints</strong> settling over several weeks on the stack — the classic “plateaued injury, started KLOW, back training by week four” arc.</p>
+      <div class="caveat">Caveat: Rest, deloading, and the natural healing curve produce exactly this arc. Tendon issues famously resolve on timelines that look like treatment effects.</div>
+    </div>
+    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(95,157,255,.12)"/><rect x="10" y="18" width="44" height="28" rx="6" fill="none" stroke="#7f88a5" stroke-width="2.5"/><path d="M16 33h9l3-6 3 6h17" stroke="#7f88a5" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>The quiet “nothing happened”</h4>
+      </div>
+      <p>Buried in every long thread: <strong>“felt zero difference,”</strong> “expensive experiment,” “couldn't tell.” These posts rarely get upvoted — but they're numerous, and they come from people who wanted it to work.</p>
+      <div class="caveat">Caveat: Selection bias in its purest form: boring non-results sink while exciting stories float. Any honest read weights these equally with the success stories.</div>
+    </div>
+    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(251,113,133,.12)"/><rect x="24" y="10" width="16" height="34" rx="4" fill="none" stroke="#fb7185" stroke-width="3"/><rect x="24" y="30" width="16" height="14" fill="#fb7185" opacity=".45"/><path d="M18 52h28" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/></svg>
+        <h4>The quality scares</h4>
+      </div>
+      <p>Recurring complaints about <strong>blend consistency</strong> — one vial feeling different from the next, cloudy product, labels that don't match — plus irritation some users blame on a bad batch rather than the compounds.</p>
+      <div class="caveat">Caveat: Anonymous and unverifiable — but consistent with independent lab testing that keeps finding mislabeled gray-market peptides. With blends, “it didn't work” and “it wasn't what it said” are indistinguishable.</div>
+    </div>
+    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(240,151,60,.12)"/><circle cx="22" cy="32" r="13" fill="none" stroke="#f0973c" stroke-width="3"/><circle cx="42" cy="32" r="13" fill="none" stroke="#fb7185" stroke-width="3"/><circle cx="32" cy="32" r="4" fill="#b79bff"/></svg>
+        <h4>The “KLOW vs GLOW” debate</h4>
+      </div>
+      <p>Endless threads argue whether <strong>KPV earns its place</strong> — is the fourth compound doing anything, or is KLOW just pricier GLOW? Both sides cite the same handful of mouse studies and their own n=1.</p>
+      <div class="caveat">Caveat: Nobody can separate KPV's contribution inside a four-compound blend without a controlled comparison. The debate is unresolvable by design.</div>
+    </div>
+    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(251,113,133,.12)"/><path d="M32 8c10 12 16 20 16 30a16 16 0 0 1-32 0c0-10 6-18 16-30z" fill="none" stroke="#fb7185" stroke-width="3"/><path d="M26 38a8 8 0 0 0 8 8" fill="none" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/></svg>
+        <h4>The inflammation stories</h4>
+      </div>
+      <p>Posters describing a <strong>general “less inflamed” feeling</strong> — morning stiffness easing, achy joints quieter, faster bounce-back after hard sessions — usually credited to KPV, the stack's advertised inflammation-brake.</p>
+      <div class="caveat">Caveat: “Feeling less inflamed” is one of the most placebo-responsive impressions there is, and rest plus reduced training load does exactly this. No biomarker, no claim.</div>
+    </div>
+    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(240,151,60,.12)"/><circle cx="32" cy="26" r="10" fill="none" stroke="#f0973c" stroke-width="3"/><path d="M32 36v16M24 44l8-4 8 4" stroke="#f0973c" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        <h4>Hair, skin &amp; nails</h4>
+      </div>
+      <p>The GHK-Cu cosmetic halo: <strong>thicker-feeling hair, faster nail growth, “better skin”</strong> — a grab-bag of cosmetic observations, always unmeasured, often reported as a package deal.</p>
+      <div class="caveat">Caveat: Nobody measures these; lighting, grooming, and wishful thinking do the heavy lifting. Five simultaneous cosmetic wins with no measurements is a signal about perception.</div>
+    </div>
+    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(183,155,255,.12)"/><text x="32" y="43" text-anchor="middle" fill="#b79bff" font-size="26" font-weight="800" font-family="inherit">?</text></svg>
+        <h4>The question nobody can answer</h4>
+      </div>
+      <p>A recurring post type: <strong>“Has anyone run this long-term? What happened after a year?”</strong> The replies are silence or speculation — because no one, researchers included, has long-term human data on the stack.</p>
+      <div class="caveat">Caveat: The most honest thread format on the forums — an unanswered question. Anyone selling certainty about long-term effects is selling something the science doesn't have.</div>
+    </div>
+    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(95,157,255,.12)"/><rect x="12" y="36" width="8" height="16" rx="2" fill="#5f9dff"/><rect x="24" y="28" width="8" height="24" rx="2" fill="#5f9dff"/><rect x="36" y="20" width="8" height="32" rx="2" fill="#5f9dff"/><path d="M10 24l14-6 12 4 12-8" stroke="#5f9dff" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+        <h4>The bloodwork claims</h4>
+      </div>
+      <p>Occasional posters share <strong>before-and-after lab numbers</strong> — CRP, hormone panels — claiming improvements on the stack. The figures arrive as unverified screenshots with no mention of what else changed between draws.</p>
+      <div class="caveat">Caveat: Labs fluctuate with sleep, diet, illness, and training. A screenshot of a lab value is not a study — it's a story with decimal points.</div>
+    </div>
+    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+      <div class="anec-head">
+        <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(183,155,255,.12)"/><circle cx="20" cy="32" r="8" fill="#b79bff"/><circle cx="32" cy="32" r="8" fill="#f0973c"/><circle cx="44" cy="32" r="8" fill="#5f9dff"/><text x="32" y="56" text-anchor="middle" fill="#7f88a5" font-size="14" font-weight="800" font-family="inherit">?</text></svg>
+        <h4>The “which one worked?” problem</h4>
+      </div>
+      <p>The stack's signature epistemic trap, raised even by fans: <strong>when four compounds go in together, nobody knows which one did anything</strong> — or whether it was the combination, the rest, or nothing at all.</p>
+      <div class="caveat">Caveat: This is the most self-aware theme in the culture, and it's correct. Multi-compound stacks are uninterpretable by nature — that's a feature of the marketing, not the science.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 6 : SAFETY ================= -->
+<section class="chapter" id="ch6">
+  <div class="eyebrow reveal"><span class="n">06</span> Protocol talk</div>
+  <h2 class="reveal">The protocol <span class="hl">conversation</span></h2>
+  <p class="lede reveal">Your spec asked for a dosing protocol. Here is the honest version: <strong>there is no clinical protocol for KLOW</strong> — no trial ever defined one. What exists is a <em>conversation</em>: themes that recur whenever forums and sellers discuss how the stack gets used. This chapter maps that conversation. <strong>It is not instructions, and this page will not print amounts or schedules.</strong></p>
+
+  <div class="diagram reveal">
+    <svg viewBox="0 0 900 320" role="img" aria-label="Cycle diagram of the four recurring protocol discussion themes">
+      <g font-family="inherit">
+        <g class="spin-slow" style="transform-origin:450px 150px">
+          <circle cx="450" cy="150" r="105" fill="none" stroke="#3a4160" stroke-width="2" stroke-dasharray="8 8"/>
+          <circle cx="450" cy="45" r="10" fill="#f0973c"/>
+          <circle cx="555" cy="150" r="10" fill="#fb7185"/>
+          <circle cx="450" cy="255" r="10" fill="#b79bff"/>
+          <circle cx="345" cy="150" r="10" fill="#5f9dff"/>
+        </g>
+        <g class="glow-pulse">
+          <circle cx="450" cy="150" r="58" fill="rgba(237,240,249,.04)" stroke="#edf0f9" stroke-width="2"/>
+          <text x="450" y="144" text-anchor="middle" fill="#edf0f9" font-size="14" font-weight="800">NO MEDICAL</text>
+          <text x="450" y="164" text-anchor="middle" fill="#edf0f9" font-size="14" font-weight="800">CONSENSUS</text>
+        </g>
+        <g font-size="14" font-weight="700">
+          <text x="450" y="30" text-anchor="middle" fill="#f0973c">Cycle blocks</text>
+          <text x="660" y="155" text-anchor="middle" fill="#fb7185">One vial vs separate</text>
+          <text x="450" y="292" text-anchor="middle" fill="#b79bff">Routes discussed</text>
+          <text x="240" y="155" text-anchor="middle" fill="#5f9dff">Breaks between runs</text>
+        </g>
+      </g>
+    </svg>
+    <div class="cap">Four themes orbit every protocol discussion — around an empty center: no tested protocol exists.</div>
+  </div>
+
+  <div class="panel reveal">
+    <h3>What the conversation actually covers</h3>
+    <div class="kv"><span class="k l">Cycle blocks</span><p>Forum talk runs in <strong>multi-week blocks</strong> — “a few weeks on” is the recurring unit. Nobody cites a trial for the length; it's folk convention copied from thread to thread.</p></div>
+    <div class="kv"><span class="k p">One vial vs separate</span><p>Pre-mixed 80mg blends trade <strong>convenience for opacity</strong> — you can't adjust or drop one compound. Separate vials trade simplicity for control. The debate never resolves because there's no data either way.</p></div>
+    <div class="kv"><span class="k s">Routes discussed</span><p>Injection is the most-discussed route; <strong>oral KPV</strong> comes up because of its PepT1 gut story, and <strong>topical GHK-Cu</strong> because of its cosmetic history. Discussion is not evidence of effectiveness by any route.</p></div>
+    <div class="kv"><span class="k v">Breaks between runs</span><p>“Time off” between blocks is folk wisdom — a hedge against unknown long-term effects. The length of the break is as unstudied as everything else here.</p></div>
+    <div class="kv"><span class="k r">What this page won't do</span><p><strong>No amounts, no schedules, no reconstitution math, no sourcing.</strong> Printing those would turn an educational page into an instruction manual for unapproved compounds — a line this series doesn't cross.</p></div>
+    <div class="plain"><span class="plabel">Plain English</span><b>There's no official recipe — only forum habits.</b> People discuss block lengths, combined vs separate vials, and routes the way cooks swap tips — except no chef ever tested the dish. Treat every "protocol" you see online as folklore, not medicine.</div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 7 : GLOSSARY ================= -->
+<section class="chapter" id="ch7">
+  <div class="eyebrow reveal"><span class="n">07</span> Risks &amp; unknowns</div>
+  <h2 class="reveal">Open questions, <span class="hl">risks</span>, and unknowns</h2>
+  <p class="lede reveal">Four investigational compounds means four unknowns — <strong>plus</strong> the unknowns of combining them. With no human safety record for any member, the risk profile isn't "low." It's <strong>blank</strong>.</p>
+
+  <div class="panel reveal">
+    <div class="kv"><span class="k a">Long-term unknowns</span><p><strong>No long-term human data exists for any of the four.</strong> Effects on hormones, fertility, immune function, or cancer risk over months and years are simply unstudied — for each compound and especially for the stack.</p></div>
+    <div class="kv"><span class="k r">Four-way interactions</span><p>How these four interact <strong>with each other</strong> is unknown. Compounds that each nudge inflammation, vessels, or cell behavior could plausibly interfere — or amplify each other — in ways no study has examined.</p></div>
+    <div class="kv"><span class="k a">The angiogenesis question</span><p>Anything proposed to grow new blood vessels raises a <strong>theoretical tumor concern</strong> — tumors also need blood supply. Unproven in either direction for BPC-157 in humans; it remains an open question, not a finding.</p></div>
+    <div class="kv"><span class="k l">Copper load</span><p>GHK-Cu is half the blend by weight, and <strong>copper is toxic in excess</strong> — the body tightly regulates it for a reason. What repeated copper-peptide exposure does systemically is unstudied.</p></div>
+    <div class="kv"><span class="k p">Immune damping unknowns</span><p>KPV's whole pitch is <strong>turning down inflammatory alarms</strong>. Inflammation is also how the body fights infection and clears damaged cells — chronically damping it without medical supervision is an experiment, not a therapy.</p></div>
+    <div class="kv"><span class="k r">Product risk</span><p>Blends move through <strong>unregulated channels</strong>: unknown contents, unknown sterility, unknown dose accuracy. Independent testing keeps finding gray-market peptides that don't match their labels — and with four compounds in one vial, <strong>you can't even tell which one a bad batch mislabeled</strong>.</p></div>
+    <div class="kv"><span class="k r">Drug interactions</span><p><strong>Unstudied.</strong> How any of the four interacts with medications — blood thinners, immunosuppressants, anything — is unknown. A real concern for anyone on prescriptions.</p></div>
+    <div class="kv"><span class="k v">Sport</span><p><strong>BPC-157 (S0) and TB-500 (S2) are prohibited by WADA.</strong> GHK-Cu is not listed; KPV sits in untested gray area. Tested athletes risk multi-year sanctions — "it was a blend" is not a defense.</p></div>
+    <div class="plain"><span class="plabel">Plain English</span><b>Four unknowns don't average out — they multiply.</b> "Natural fragment" is not the same as "safe," and safety is something you <em>demonstrate</em> in trials, not assume from a forum thread. Every risk on this list is currently answered with a shrug.</div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 8 : TAKEAWAYS ================= -->
+<section class="chapter" id="ch8">
+  <div class="eyebrow reveal"><span class="n">08</span> Glossary</div>
+  <h2 class="reveal">Layman <span class="hl">terms</span></h2>
+  <p class="lede reveal">Tap any term for the full breakdown: the science, a KLOW-tied example, then the plain-English takeaway.</p>
+  <div class="gloss reveal" id="gloss">
+    <div class="g-item"><button class="g-q"><svg class="gthumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(240,151,60,.12)"/><circle cx="12" cy="24" r="5" fill="#f0973c"/><circle cx="24" cy="24" r="5" fill="#fb7185"/><circle cx="36" cy="24" r="5" fill="#b79bff"/></svg><span class="term">Peptide</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>A short chain of amino acids linked by peptide (amide) bonds — each link formed when one amino acid's carboxyl group reacts with the next one's amino group, releasing a water molecule. By convention, chains under roughly 50 amino acids are called peptides; longer folded chains earn the title of protein. A peptide's exact sequence determines its shape, and therefore which receptors, enzymes, or structures it can interact with — which is why chains of different lengths can have entirely different proposed effects.</p>
+      <p class="gex"><span class="gslabel">Example</span>All four KLOW members are peptides: GHK-Cu and KPV are just 3 units each, TB-500 is 7, BPC-157 is 15 — all far short of protein size, which is why the stack is described as peptides, not proteins.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>Amino acids are beads; a peptide is a short bracelet.</b> The order of the beads decides what the bracelet can do. That is why KLOW's four members — 3, 15, 7, and 3 beads long — are discussed as doing completely different jobs despite all being 'peptides.' It is also why a tiny change in sequence can destroy the effect entirely: same beads, different order, different bracelet. When forums throw around the word peptide, they just mean a short chain — the length and order are where all the meaning lives.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v2" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(95,157,255,.12)"/><rect x="8" y="20" width="10" height="10" rx="3" fill="#5f9dff"/><rect x="20" y="20" width="10" height="10" rx="3" fill="#b79bff"/><rect x="32" y="20" width="10" height="10" rx="3" fill="#f0973c"/></svg><span class="term">Amino acids</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Organic molecules carrying both an amino group (–NH<sub>2</sub>) and a carboxyl group (–COOH) on a central carbon, plus a variable side chain (R group) that gives each of the 20 standard amino acids its chemical personality — small or bulky, water-loving or water-fearing, positively or negatively charged. Cells link them into chains following mRNA blueprints; the resulting sequence dictates how the chain folds and what it can do.</p>
+      <p class="gex"><span class="gslabel">Example</span>KPV is literally named for its three: <strong>L</strong>ysine, <strong>P</strong>roline, <strong>V</strong>aline — the name on the vial is the ingredient list, in order.</p>
+      <div class="plain"><span class="plabel">Plain English</span>The 20 different Lego bricks your body builds nearly everything from — muscles, enzymes, hormones, you name it. Peptides are just short stacks of them snapped together in a row. KPV's name is unusually honest: it tells you the three bricks and their order, Lys-Pro-Val. Change one brick or shuffle the order and you no longer have KPV at all — you have a different molecule with different behavior. That fragility is worth remembering whenever someone treats these compounds like simple supplements: they are precise little machines, and precision cuts both ways.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v3" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(251,113,133,.12)"/><circle cx="24" cy="24" r="14" fill="none" stroke="#fb7185" stroke-width="3"/><circle cx="24" cy="24" r="6" fill="#fb7185"/><path d="M24 10v-4M38 24h4" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/></svg><span class="term">Alpha-MSH</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Alpha-melanocyte-stimulating hormone: a 13-amino-acid peptide hormone produced mainly in the pituitary gland, with fingers in many pies — skin pigmentation, appetite control, sexual function, and immune signaling. Most of those effects run through the melanocortin receptor family (MC1R–MC5R). Researchers dissecting the molecule found its jobs live in different regions: the receptor-binding core drives tanning and appetite, while the C-terminal tail (positions 11–13) carries the anti-inflammatory activity on its own.</p>
+      <p class="gex"><span class="gslabel">Example</span>KPV <em>is</em> that tail — alpha-MSH's positions 11–13, snipped off. The KLOW stack's inflammation-brake is literally the last three beads of this 13-bead hormone.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>One hormone, many jobs — and KPV is just the quietest three beads.</b> Alpha-MSH is a multitasker your brain makes: it influences tanning, hunger, and immune signals. Scientists found that the anti-inflammatory power sits at the very tail end of the molecule, separate from the parts that cause tanning or appetite changes. KPV is that tail, cut free. That is the whole bet of the KLOW stack's fourth member: keep the calm, drop the side gigs. Whether that bet pays off in humans is untested — but the molecular logic is genuinely elegant, which is exactly why it deserves real trials instead of forum testimonials.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(251,113,133,.12)"/><text x="24" y="32" text-anchor="middle" fill="#fb7185" font-size="16" font-weight="800" font-family="inherit">KPV</text></svg><span class="term">KPV (the tripeptide)</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Lys-Pro-Val: the three-amino-acid C-terminal fragment of alpha-MSH, and the smallest member of the KLOW stack at 10mg of the 80mg blend. Its characterized mechanism is intracellular: transported into gut epithelial and immune cells by the PepT1 transporter, where it interferes with NF-κB signaling — the master switch of inflammatory gene expression — without activating melanocortin receptors. Key preclinical milestones: anti-inflammatory effects in mice shown in 1989; PepT1-mediated gut uptake and colitis reduction published in <em>Gastroenterology</em> in 2008; targeted nanoparticle delivery work through the 2010s. Zero human trials as of late 2026; an FDA advisory panel voted 8–6 in July 2026 to consider it for the 503A compounding list (non-binding).</p>
+      <p class="gex"><span class="gslabel">Example</span>KPV is the “K” in KLOW — the entire reason the stack differs from GLOW. Everything distinctive about KLOW's story (inflammation-brake, gut–skin angle) traces to this three-bead fragment.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>The tiniest member with the biggest story.</b> Three amino acids — the smallest thing in the stack — carrying the whole reason KLOW exists as a concept separate from GLOW. In lab studies it slips into gut and immune cells through a dedicated doorway and turns down the master inflammation alarm, without triggering the tanning or appetite effects of its parent hormone. It has the longest research history of the stack's anti-inflammatory claims, going back to 1989, and even got a (narrow, non-binding) nod from an FDA advisory panel in 2026. And yet: zero human trials. KPV is the perfect emblem of this entire page — fascinating biology, decades of animal work, and a human evidence column that reads exactly zero.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v2" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(183,155,255,.12)"/><path d="M24 8l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#b79bff"/><circle cx="24" cy="34" r="6" fill="none" stroke="#b79bff" stroke-width="2.5"/></svg><span class="term">NF-κB</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Nuclear factor kappa-B: a protein complex that acts as a master transcription factor for inflammation — when activated, it switches on the genes that produce pro-inflammatory cytokines (TNF-α, IL-1β, IL-6 and others). It sits at the center of the immune system's alarm circuitry: nearly every inflammatory signal routes through it. Because it is so central, suppressing NF-κB quiets inflammation broadly — which is also why doing so carelessly could blunt useful immune responses. KPV is proposed to interfere with NF-κB activation from inside the cell, including by competing at the nuclear import machinery that carries NF-κB's p65 subunit into the nucleus.</p>
+      <p class="gex"><span class="gslabel">Example</span>NF-κB is KPV's proposed target in the KLOW story — the 'alarm' the stack's fourth member is supposed to quiet while the other three handle repair.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>The fire alarm of the immune system.</b> When tissue is damaged or infected, NF-κB is the switch that turns on the inflammatory response — swelling, heat, recruitment of immune cells. That response is essential for healing, which is why permanently silencing the alarm would be dangerous. KPV's proposed trick is subtler: in lab studies it interferes with the alarm's wiring from inside the cell, turning the volume down rather than cutting the wire. Whether that volume knob exists in humans, and whether turning it is wise outside a doctor's supervision, are both open questions. An alarm you can't fully trust is worse than no alarm at all.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v3" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(95,157,255,.12)"/><rect x="10" y="18" width="28" height="12" rx="6" fill="none" stroke="#5f9dff" stroke-width="3"/><circle cx="24" cy="24" r="4" fill="#5f9dff"/><path d="M38 24h6" stroke="#5f9dff" stroke-width="3" stroke-linecap="round"/></svg><span class="term">PepT1</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Peptide transporter 1: a protein doorway in the intestinal lining that ferries small peptides (di- and tripeptides) from the gut into the cells beneath. It is the reason some tiny peptides can act orally when larger ones are digested to nothing. The KPV-relevant twist, published in <em>Gastroenterology</em> in 2008: PepT1 is <strong>upregulated in inflamed colon tissue</strong> — inflamed areas grow more doorways, so they pull in more KPV than healthy tissue does. The same study showed the protective effect vanished in PepT1-knockout mice, tying the mechanism to the transporter.</p>
+      <p class="gex"><span class="gslabel">Example</span>PepT1 is KPV's proposed entry route — and the basis for the 'self-targeting' claim that makes KPV interesting as a gut-inflammation candidate in the KLOW narrative.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>A doorway that multiplies where there's trouble.</b> Your gut lining is studded with tiny doors that pull small peptides inside — that is how a three-bead fragment like KPV could survive a trip through the digestive tract when bigger peptides get shredded. The clever part, found in mouse studies: inflamed colon tissue grows <em>extra</em> doors, so the most inflamed spots soak up the most KPV — a self-targeting effect, like a fire extinguisher that sprays harder where the fire is hottest. Elegant in mice. Unproven in humans. And it is worth noting the whole oral-KPV story leans on this one transporter behaving the same way in people — an assumption, not a finding.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(240,151,60,.12)"/><circle cx="24" cy="24" r="10" fill="none" stroke="#f0973c" stroke-width="3"/><circle cx="24" cy="24" r="4" fill="#f0973c"/><text x="24" y="44" text-anchor="middle" fill="#f0973c" font-size="10" font-weight="800" font-family="inherit">Cu</text></svg><span class="term">GHK-Cu</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Glycyl-histidyl-lysine bound to copper: a tripeptide–copper complex found naturally in human plasma, saliva, and urine, with blood levels falling roughly 60% between age 20 and 60. Its grounded biochemistry is copper delivery — GHK binds Cu²⁺ tightly and supplies it to copper-dependent enzymes including lysyl oxidase (collagen/elastin cross-linking) and superoxide dismutase (antioxidant defense). The debated tier: lab studies reporting ~4,048 genes shifted toward repair patterns in fibroblasts, framed by proponents as 'resetting' aged gene expression. Regulatory status: cosmetic ingredient, not FDA-approved as a drug; notably absent from WADA's banned list. It is the only KLOW member with real (small, topical, skin-focused) human trials.</p>
+      <p class="gex"><span class="gslabel">Example</span>GHK-Cu is 50mg of the 80mg reference blend — the bulk of the vial — and the stack's skin-and-collagen lane.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>The copper courier.</b> Your blood used to carry plenty of this little copper-gripping fragment; levels slide downhill with age. The solid part of its story is gloriously un-mysterious: it delivers copper to enzymes that stitch collagen together and defuse oxidative damage — textbook biochemistry your body runs every day. The spicy part is the gene story: in lab dishes, thousands of genes nudge toward repair patterns, which marketers translate as 'gene reset.' A dish is not a face. GHK-Cu is the most evidence-backed member of the stack and still thin by any medical standard — which tells you everything about where the other three stand.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v2" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(183,155,255,.12)"/><path d="M14 34c6-10 14-10 20 0s14 10 20 0" fill="none" stroke="#b79bff" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="24" r="4" fill="#f0973c"/></svg><span class="term">BPC-157</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Body Protection Compound-157: a 15-amino-acid fragment derived from a protective protein found in human gastric juice. Unusual among peptides for surviving stomach acid in lab tests. Proposed mechanisms include promoting angiogenesis (new capillary growth), modulating inflammatory signaling molecules, and supporting tendon and connective-tissue repair — essentially all from rodent and cell-culture work. Evidence status per a 2025 review: 35 of 36 published studies preclinical. Regulatory: not FDA-approved for any use; prohibited in tested sport under WADA's S0 (non-approved substances).</p>
+      <p class="gex"><span class="gslabel">Example</span>BPC-157 is the 10mg 'repair signal' member of KLOW — and the source of the stack's gut-repair folklore, tracing to its stomach-protein origin.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>The stomach fragment with a rat-sized fan club.</b> Fifteen amino acids copied from a protein that protects your stomach lining — unusually tough for a peptide, surviving acid that shreds most of its cousins. In animal studies it seems to encourage tiny blood vessels to grow toward damage and nudge connective tissue toward repair, which is why forums credit it with everything from tendon comebacks to calmer guts. Here is the cold water: 35 of 36 published studies are animal or cell work. It is banned in tested sport, unapproved everywhere as a medicine, and its human pharmacology is essentially a blank page. Interesting? Genuinely. Proven? Not even close.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v3" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(95,157,255,.12)"/><path d="M10 30c8-12 16 4 24-6s10 2 12-2" fill="none" stroke="#5f9dff" stroke-width="3" stroke-linecap="round"/><circle cx="34" cy="14" r="4" fill="#5f9dff"/></svg><span class="term">Thymosin beta-4 / TB-500</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>Thymosin beta-4 is a 43-amino-acid protein found in nearly every human cell, where one of its jobs is sequestering G-actin — regulating the cell's internal skeleton and thereby cell movement. TB-500 is a 7-amino-acid fragment (positions 17–23) sold as capturing the parent's actin-binding, migration-promoting activity. Critical distinction: the <em>parent</em> protein reached Phase 2 clinical trials for certain uses; the <em>fragment</em> sold as TB-500 has zero published human trials. A rodent observation linked the parent to hair growth, which forums telephone-gamed into human hair claims. Regulatory: not FDA-approved; prohibited in tested sport (WADA S2).</p>
+      <p class="gex"><span class="gslabel">Example</span>TB-500 is KLOW's 10mg 'cell migration' member — and the source of the stack's hair-growth lore, which traces to the parent protein in mice, not the fragment in humans.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>A snippet sold on its parent's résumé.</b> Thymosin beta-4 is a real, important protein in nearly every cell you own — it manages the internal scaffolding that lets cells move. TB-500 is seven amino acids sliced from its middle, sold on the claim that the snippet keeps the parent's best trick: helping repair cells crawl toward damage. The parent made it to mid-stage human trials; the fragment has precisely zero. That gap — parent vs. fragment — is the most important seven-amino-acid distinction on this page, and the one most marketing quietly skips. Forums also credit it with hair growth, which comes from a mouse study of the <em>parent</em>. A fragment is not the parent, and a mouse is not you.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(95,157,255,.12)"/><path d="M8 32h32M8 32l6-6M8 32l6 6" stroke="#5f9dff" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="32" cy="18" r="5" fill="#5f9dff"/></svg><span class="term">Actin</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>A protein that polymerizes into filaments forming a major part of the cell's cytoskeleton — its internal scaffolding and movement machinery. Cells crawl by assembling actin filaments at their leading edge (pushing forward) and disassembling them at the rear. G-actin (globular, single units) polymerizes into F-actin (filamentous chains); thymosin beta-4's known job is sequestering G-actin, holding the building blocks in reserve and releasing them where movement is needed. TB-500's entire proposed mechanism is borrowed from this biology: the fragment is claimed to retain the parent's actin-binding activity and thereby promote cell migration toward injury.</p>
+      <p class="gex"><span class="gslabel">Example</span>Actin is the molecular machinery behind TB-500's 'cell migration' claim — the proposed mechanism lane of KLOW's third member.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>The cell's scaffolding — and its legs.</b> Every cell carries an internal skeleton made of actin filaments, and cells move by building that skeleton forward — like laying track in front of a train while pulling it up behind. Thymosin beta-4 manages the supply of track pieces. TB-500's sales pitch is that its seven amino acids keep enough of that management skill to get repair cells moving toward damage faster. It is a beautiful piece of borrowed biology: the parent protein really does this job. But 'the fragment does it too' is asserted, not shown — no human study has ever watched it happen. Scaffolding is real; the claim that this snippet directs the crew is not.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v2" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(240,151,60,.12)"/><line x1="8" y1="36" x2="40" y2="36" stroke="#3a4160" stroke-width="4" stroke-linecap="round"/><path d="M24 36c0-8 4-12 8-18" stroke="#f0973c" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="32" cy="16" r="4" fill="#f0973c"/></svg><span class="term">Angiogenesis</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>The formation of new blood capillaries from existing vessels — a normal part of wound healing, where growing tissue needs fresh supply lines. Tumors hijack the same process, which is why anything proposed to promote vessel growth carries a theoretical cancer concern. BPC-157's most-cited proposed mechanism is pro-angiogenic: nudging endothelial cells to sprout new capillaries toward damaged tissue, observed in rodent models. The evidence is entirely preclinical, and the tumor question is unanswered in both directions — no data showing harm, no data showing safety.</p>
+      <p class="gex"><span class="gslabel">Example</span>Angiogenesis is BPC-157's headline proposed mechanism in the KLOW stack — and the source of the stack's most serious theoretical risk.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>Growing new supply lines — for healing, or for worse.</b> When tissue is damaged, it needs new tiny blood vessels to feed the repair crew — that is angiogenesis, and it is a normal, essential part of healing. BPC-157 is proposed to encourage it, which sounds wonderful until you remember that tumors need blood supply too. This is the double edge nobody can resolve yet: the same process that could speed healing could theoretically feed something you don't want fed. There is no human data in either direction — no proven benefit, no proven harm. Just a mechanism observed in rats and a question mark hanging over all of it. Anyone telling you this risk is settled is guessing.</div>
+    </div></div>
+    <div class="g-item"><button class="g-q"><svg class="gthumb v3" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="rgba(183,155,255,.12)"/><rect x="12" y="10" width="24" height="28" rx="4" fill="none" stroke="#b79bff" stroke-width="3"/><path d="M18 24h12" stroke="#b79bff" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="32" r="3" fill="#fb7185"/></svg><span class="term">Investigational</span><span class="plus">+</span></button><div class="g-a">
+      <p class="gsci"><span class="gslabel">The science</span>A regulatory status meaning a compound is being studied but has not been approved as a medicine by regulators like the FDA. Investigational is not a synonym for 'safe but unapproved' or 'works but ignored' — it means the human safety and efficacy data required for approval do not exist yet. Compounds can remain investigational for decades, and most never graduate. Related terms: 'research chemical' (sold for lab use, not human use) and 'compounding list' (the FDA's 503A bulks list — substances compounding pharmacies may use; inclusion is access, not approval).</p>
+      <p class="gex"><span class="gslabel">Example</span>All four KLOW members are investigational — and the stack itself has never been studied at all, making KLOW investigational twice over: unapproved parts, untested combination.</p>
+      <div class="plain"><span class="plabel">Plain English</span><b>'Scientists are still figuring this one out.'</b> Investigational is a precise word with a fuzzy reputation. It does not mean 'natural and safe.' It does not mean 'Big Pharma is hiding it.' It means exactly this: the human trials that would prove safety and effectiveness haven't happened. Most investigational compounds never become medicines — not because of conspiracies, but because most promising lab findings don't survive contact with human biology. Every compound in KLOW wears this label. The stack as a whole has less evidence than any single member — because while each has at least <em>some</em> lab work, the combination has literally none. Keep that arithmetic in mind whenever the marketing sounds confident.</div>
+    </div></div>
+  </div>
+</section>
+<!-- ================= CHAPTER 9 : TAKEAWAYS ================= -->
+<section class="chapter" id="ch9">
+  <div class="eyebrow reveal"><span class="n">09</span> Key takeaways</div>
+  <h2 class="reveal">The <span class="hl">short</span> list</h2>
+  <p class="lede reveal">If you skimmed everything above, keep these six.</p>
+  <div class="takes">
+    <div class="take reveal"><div class="ic">🧪</div><div><h4>Four compounds, zero stack trials</h4><p>KLOW has never been studied as a combination — not in animals, not in cells, not in people. Every claim about the stack is extrapolated from its parts.</p></div></div>
+    <div class="take reveal d1"><div class="ic">🔥</div><div><h4>KPV is the whole point of "KLOW"</h4><p>Without KPV it's just GLOW. The inflammation-brake story is the differentiator — and it rests entirely on animal work, with zero human trials.</p></div></div>
+    <div class="take reveal d2"><div class="ic">🧱</div><div><h4>Only GHK-Cu has human data</h4><p>Small, topical, skin-focused trials — thin, but real. The other three members have essentially no controlled human evidence at all.</p></div></div>
+    <div class="take reveal"><div class="ic">⚖️</div><div><h4>Half the stack is banned in sport</h4><p>BPC-157 and TB-500 are WADA-prohibited. GHK-Cu isn't listed; KPV is untested gray area. Tested athletes, take note.</p></div></div>
+    <div class="take reveal d1"><div class="ic">🫧</div><div><h4>Anecdotes are culture, not evidence</h4><p>Skin turnarounds and recovery stories dominate the forums — with no controls, heavy survivorship bias, and four confounded compounds per story.</p></div></div>
+    <div class="take reveal d2"><div class="ic">❓</div><div><h4>The honest position is uncertainty</h4><p>Interesting biology, decades of animal work, no human proof, unknown long-term risks. "We don't know yet" is the correct answer — and the least satisfying one.</p></div></div>
+  </div>
+</section>
+
+<!-- ================= CHAPTER 10 : LIMITS ================= -->
+<section class="chapter" id="ch10">
+  <div class="eyebrow reveal"><span class="n">10</span> Limits of this page</div>
+  <h2 class="reveal">What this page <span class="hl">doesn't</span> cover</h2>
+  <p class="lede reveal">Deliberate boundaries — here's what was left out and why.</p>
+  <div class="panel reveal">
+    <div class="kv"><span class="k r">No dosing</span><p>No amounts, schedules, reconstitution math, or administration guidance — for any compound, by any route. This series doesn't publish instruction manuals for investigational substances.</p></div>
+    <div class="kv"><span class="k r">No sourcing</span><p>No vendors, no brand recommendations, no buying guidance. Where you get unregulated compounds is not something this page will help with.</p></div>
+    <div class="kv"><span class="k a">No stacking advice</span><p>Nothing here endorses combining these compounds — or adding more. "The stack exists" is a fact about internet culture, not a recommendation.</p></div>
+    <div class="kv"><span class="k a">Not exhaustive science</span><p>This is a simplified overview for a general audience. It omits nuance, contrary findings, and the full weight of the primary literature — read the actual reviews before forming strong opinions.</p></div>
+    <div class="kv"><span class="k v">Not medical advice</span><p>Nothing here diagnoses, treats, or recommends. Health decisions belong with a qualified professional who knows your history — not a webpage.</p></div>
+    <div class="plain"><span class="plabel">Plain English</span><b>This page explains the conversation; it doesn't join it.</b> It won't tell you what to take, where to get it, or whether it works — because on the evidence available, those questions don't have responsible answers yet.</div>
+  </div>
+</section>
+</main>
+
+<!-- ================= DISCLAIMER ================= -->
+<footer class="disclaimer">
+  <div class="wrap">
+    <h2>⚠️ Disclaimer — please read</h2>
+    <div class="dbox">
+      <p><strong>This page is for educational and informational purposes only.</strong> It is not medical advice, not a diagnosis, not a treatment recommendation, and not an endorsement or encouragement to obtain or use GHK-Cu, BPC-157, TB-500, KPV, or any other compound. Nothing here is intended to diagnose, treat, cure, or prevent any disease.</p>
+      <p><strong>All four compounds discussed here are investigational.</strong> None is approved by the FDA or any comparable regulator as a medicine for any use. Their safety profiles, effective doses, interactions — with each other and with medications — and long-term effects in humans are unknown. The four-compound combination has never been studied at all. Anything suggesting otherwise is speculation.</p>
+      <p><strong>Do not use this page to make health decisions.</strong> Always consult a qualified, licensed healthcare professional about any medical condition or before considering any substance. If you are an athlete subject to drug testing, note that BPC-157 and TB-500 are prohibited by WADA; GHK-Cu is not listed and KPV's status is untested.</p>
+      <p><strong>Anecdotes are not evidence.</strong> Personal reports quoted or paraphrased here are unverified, uncontrolled, and subject to placebo effects, selection bias, natural healing, and misattribution — compounded by the fact that four substances are taken together. They are included to describe internet culture around this stack — not to support any claim of effectiveness or safety.</p>
+      <p><strong>Limitation of liability:</strong> the author and publisher of this page make no warranties about the accuracy, completeness, or currency of its contents and accept no responsibility for actions taken based on it. Use of any compound mentioned here is solely at your own risk and may violate laws or sporting regulations in your jurisdiction.</p>
+    </div>
+    <div class="fine">
+      <p><strong>No clinician–reader relationship</strong> is created by reading this page. Content is simplified for a general audience and may omit relevant scientific nuance.</p>
+      <p><strong>Research status changes.</strong> Statements about trial counts and regulatory status reflect publicly available information around 2025–2026 and may become outdated.</p>
+      <p><strong>No commercial intent.</strong> This page sells nothing, endorses no vendor, and receives no compensation from any seller of the compounds discussed. Any resemblance to marketing is the topic's, not the author's.</p>
+      <p><span>The KLOW Stack — Claims vs Evidence · educational infographic</span></p>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* freeze SMIL-driven motion for reduced-motion users */
+  if (reduced){
+    document.querySelectorAll("svg").forEach(function(svg){
+      try { svg.pauseAnimations(); } catch(e){}
+    });
+  }
+
+  /* ---------- colorful disappearing dots ---------- */
+  var canvas = document.getElementById("dots"), ctx = canvas.getContext("2d");
+  var W=0, H=0, dots=[], raf=null;
+  function dotPalette(){
+    if (document.documentElement.getAttribute("data-theme")==="light")
+      return {colors:["109,40,217","77,124,15","14,116,144","190,24,93","160,110,20"], alpha:0.38};
+    return {colors:["240,151,60","251,113,133","183,155,255","95,157,255","251,191,36","125,211,252"], alpha:0.55};
+  }
+  function sizeCanvas(){
+    var dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    canvas.style.width = W+"px"; canvas.style.height = H+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function spawn(){
+    var pal = dotPalette();
+    var c = pal.colors[(Math.random()*pal.colors.length)|0];
+    var r = 1 + Math.random()*2.6;
+    dots.push({
+      x: Math.random()*W, y: Math.random()*H, r: r,
+      vx: (Math.random()-.5)*0.25, vy: (Math.random()-.5)*0.25,
+      life: 0, max: 240 + Math.random()*300, c: c, aMax: pal.alpha
+    });
+  }
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    if (dots.length < 70 && Math.random() < 0.5) spawn();
+    for (var i=dots.length-1; i>=0; i--){
+      var d = dots[i]; d.life++;
+      d.x += d.vx; d.y += d.vy;
+      var t = d.life/d.max, a;
+      if (t < 0.25) a = t/0.25; else if (t < 0.7) a = 1; else a = 1-(t-0.7)/0.3;
+      a = Math.max(0,a)*d.aMax;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r*(0.7+0.3*Math.sin(d.life*0.05)), 0, 6.2832);
+      ctx.fillStyle = "rgba("+d.c+","+a.toFixed(3)+")";
+      ctx.fill();
+      if (d.life >= d.max) dots.splice(i,1);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  if (!reduced){
+    sizeCanvas(); window.addEventListener("resize", sizeCanvas); tick();
+    document.addEventListener("visibilitychange", function(){
+      if (document.hidden){ cancelAnimationFrame(raf); raf=null; }
+      else if (!raf){ tick(); }
+    });
+  }
+
+  /* ---------- theme toggle ---------- */
+  var themeBtn = document.getElementById("themeToggle");
+  if (themeBtn){
+    themeBtn.addEventListener("click", function(){
+      var cur = document.documentElement.getAttribute("data-theme")==="light" ? "light" : "dark";
+      var next = cur==="light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("klow-theme", next); } catch(e){}
+      dots.length = 0; /* respawn dots in the new palette */
+    });
+  }
+
+  /* ---------- completion confetti ---------- */
+  var confCanvas = document.getElementById("confetti"),
+      cctx = confCanvas.getContext("2d"),
+      confettiDone = false, confettiPieces = [], confettiRaf = null;
+  var CONF_COLORS = ["240,151,60","251,113,133","183,155,255","95,157,255","251,191,36"];
+  function sizeConfetti(){
+    var dpr = Math.min(window.devicePixelRatio||1, 2);
+    confCanvas.width = window.innerWidth*dpr;
+    confCanvas.height = window.innerHeight*dpr;
+    confCanvas.style.width = window.innerWidth+"px";
+    confCanvas.style.height = window.innerHeight+"px";
+    cctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function confettiTick(){
+    var W = window.innerWidth, H = window.innerHeight, alive = false, i, p, fade;
+    cctx.clearRect(0,0,W,H);
+    for (i=0;i<confettiPieces.length;i++){
+      p = confettiPieces[i];
+      p.life++; p.sway += p.swaySpd;
+      p.x += p.vx + Math.sin(p.sway)*0.8;
+      p.y += p.vy; p.rot += p.vr;
+      if (p.y > H+30 || p.life >= p.max) continue;
+      alive = true;
+      fade = p.life > p.max-60 ? Math.max(0,(p.max-p.life)/60) : 1;
+      cctx.save();
+      cctx.translate(p.x,p.y); cctx.rotate(p.rot);
+      cctx.fillStyle = "rgba("+p.c+","+(0.85*fade).toFixed(3)+")";
+      if (i%3===0){ cctx.beginPath(); cctx.arc(0,0,p.w/2,0,6.2832); cctx.fill(); }
+      else { cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); }
+      cctx.restore();
+    }
+    if (alive){ confettiRaf = requestAnimationFrame(confettiTick); }
+    else { confettiRaf = null; confCanvas.classList.remove("show"); confettiPieces = []; }
+  }
+  function launchConfetti(){
+    if (confettiDone || reduced) return;
+    confettiDone = true;
+    sizeConfetti();
+    window.addEventListener("resize", sizeConfetti);
+    var W = window.innerWidth, i;
+    for (i=0;i<70;i++){
+      confettiPieces.push({
+        x: Math.random()*W, y: -20-Math.random()*90,
+        w: 4+Math.random()*5, h: 6+Math.random()*7,
+        vy: 1.2+Math.random()*2.2, vx: (Math.random()-.5)*1.4,
+        rot: Math.random()*6.28, vr: (Math.random()-.5)*0.2,
+        sway: Math.random()*6.28, swaySpd: 0.02+Math.random()*0.04,
+        c: CONF_COLORS[(Math.random()*CONF_COLORS.length)|0],
+        life: 0, max: 240+Math.random()*120
+      });
+    }
+    confCanvas.classList.add("show");
+    var toast = document.getElementById("doneToast");
+    if (toast){
+      toast.classList.add("show");
+      setTimeout(function(){ toast.classList.remove("show"); }, 4200);
+    }
+    confettiRaf = requestAnimationFrame(confettiTick);
+  }
+  var footEl = document.querySelector("footer.disclaimer");
+  if (footEl && "IntersectionObserver" in window){
+    var footObs = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ launchConfetti(); footObs.disconnect(); } });
+    }, {threshold: 0.35});
+    footObs.observe(footEl);
+  }
+
+  /* ---------- scroll progress (lerped for buttery motion) ---------- */
+  var prog = document.getElementById("progress");
+  var tocProg = document.getElementById("tocProg");
+  var tocPct = document.getElementById("tocPct");
+  var progTarget = 0, progShown = 0, progRaf = null;
+  function paintProg(p){
+    prog.style.width = p + "%";
+    if (tocProg) tocProg.style.width = p + "%";
+    if (tocPct) tocPct.textContent = Math.round(p) + "%";
+  }
+  function progTick(){
+    progRaf = null;
+    progShown += (progTarget - progShown) * 0.16;
+    if (Math.abs(progTarget - progShown) < 0.05) progShown = progTarget;
+    paintProg(progShown);
+    if (progShown !== progTarget) progRaf = requestAnimationFrame(progTick);
+  }
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    progTarget = max>0 ? (h.scrollTop/max*100) : 0;
+    if (reduced){ progShown = progTarget; paintProg(progShown); return; }
+    if (progRaf === null) progRaf = requestAnimationFrame(progTick);
+  }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  /* ---------- reveal on scroll ---------- */
+  var revEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduced){
+    var ro = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("in"); ro.unobserve(e.target); } });
+    }, {threshold: 0.12, rootMargin: "0px 0px -6% 0px"});
+    revEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    revEls.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ---------- count-up numbers ---------- */
+  var counters = document.querySelectorAll("[data-count]");
+  function countUp(el){
+    var target = parseInt(el.getAttribute("data-count"),10);
+    if (reduced){ el.textContent = target; return; }
+    var t0 = null, dur = 1200;
+    function step(ts){
+      if (!t0) t0 = ts;
+      var p = Math.min((ts-t0)/dur, 1);
+      el.textContent = Math.round(target * (1-Math.pow(1-p,3)));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ("IntersectionObserver" in window){
+    var co = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ countUp(e.target); co.unobserve(e.target); } });
+    }, {threshold: 0.6});
+    counters.forEach(function(el){ co.observe(el); });
+  } else { counters.forEach(countUp); }
+
+  /* ---------- reliable smooth-scroll nav (top rail + sidebar) ---------- */
+  document.querySelectorAll('nav.chapters a[href^="#"], .toc a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(ev){
+      var t = document.querySelector(a.getAttribute("href"));
+      if (t){
+        ev.preventDefault();
+        t.scrollIntoView({behavior: reduced ? "auto" : "smooth", block: "start"});
+        try { history.replaceState(null, "", a.getAttribute("href")); } catch(e){}
+      }
+    });
+  });
+
+  /* ---------- scrollspy (highlights both navs) ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('a[data-spy]'));
+  var secs = links.map(function(a){ return document.getElementById(a.getAttribute("data-spy")); })
+                  .filter(Boolean);
+  var tocPill = document.querySelector('.toc .toc-pill');
+  function spy(){
+    var y = window.scrollY + 140, cur = secs[0] ? secs[0].id : null;
+    secs.forEach(function(s){ if (s.offsetTop <= y) cur = s.id; });
+    links.forEach(function(a){ a.classList.toggle("active", a.getAttribute("data-spy")===cur); });
+    if (tocPill){
+      var active = document.querySelector('.toc a[data-spy="' + cur + '"]');
+      if (active){
+        tocPill.style.opacity = "1";
+        tocPill.style.height = active.offsetHeight + "px";
+        tocPill.style.transform = "translateY(" + active.offsetTop + "px)";
+      } else {
+        tocPill.style.opacity = "0";
+      }
+    }
+  }
+  window.addEventListener("scroll", spy, {passive:true});
+  window.addEventListener("resize", spy);
+  window.addEventListener("load", spy);
+  spy();
+
+  /* ---------- glossary accordion ---------- */
+  document.querySelectorAll(".g-item").forEach(function(item){
+    var q = item.querySelector(".g-q"), a = item.querySelector(".g-a");
+    q.addEventListener("click", function(){
+      var open = item.classList.contains("open");
+      document.querySelectorAll(".g-item.open").forEach(function(o){
+        o.classList.remove("open"); o.querySelector(".g-a").style.maxHeight = null;
+      });
+      if (!open){ item.classList.add("open"); a.style.maxHeight = a.scrollHeight + "px"; }
+    });
+  });
+
+  /* ---------- footer year ---------- */
+  document.getElementById("yr").textContent = "© " + new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
