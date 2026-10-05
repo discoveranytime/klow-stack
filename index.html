@@ -191,6 +191,13 @@ h2 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
   padding:.28rem .6rem;border-radius:7px;text-transform:uppercase;margin-bottom:.65rem}
 .anec h4{font-size:1.05rem;font-weight:800;margin-bottom:.5rem}
 .anec-head{display:flex;align-items:center;gap:.85rem;margin-bottom:.55rem}
+.udot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--amber);flex:0 0 auto;position:relative}
+.udot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid var(--amber);animation:udotPulse 2.2s ease-out infinite}
+@keyframes udotPulse{0%{transform:scale(.55);opacity:.9}70%{opacity:.25}100%{transform:scale(1.25);opacity:0}}
+.anec-head .udot{margin-left:.15rem}
+.ulegend{display:flex;align-items:center;gap:.75rem;margin:0 0 1.5rem;padding:.85rem 1.15rem;border:1px dashed var(--line);border-radius:14px;background:rgba(255,255,255,.03);color:var(--muted);font-size:.93rem}
+.ulegend strong{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.udot::after{animation:none;opacity:.35;transform:scale(.8)}}
 .anec-head .thumb{flex:0 0 auto;width:54px;height:54px;border-radius:14px;border:1px solid var(--line)}
 .anec-head h4{margin-bottom:0}
 .anec p{color:var(--muted);font-size:.95rem}
@@ -739,99 +746,101 @@ nav.chapters .rail{padding-right:3.8rem}
 
   <div class="folk-note reveal"><strong>How to read this section:</strong> every card below is a <em>recurring theme</em> paraphrased from many anonymous posts — not quotes from identifiable people, and not claims this page endorses. Timelines people mention (“a few weeks”) are their impressions, not findings.</div>
 
-  <div class="anec-grid">
-    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+    <div class="ulegend reveal"><span class="udot" aria-hidden="true"></span><span><strong>Unverified anecdote</strong> — the pulsing dot marks a paraphrased recurring theme from forums and social media: not verified, not evidence.</span></div>
+
+<div class="anec-grid">
+    <div class="anec reveal">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(240,151,60,.12)"/><circle cx="32" cy="32" r="16" fill="none" stroke="#f0973c" stroke-width="3"/><path d="M24 32l5 5 11-11" stroke="#f0973c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 12l1.6 3.6 3.6 1.6-3.6 1.6L50 22.4l-1.6-3.6-3.6-1.6 3.6-1.6z" fill="#f0973c"/></svg>
-        <h4>The skin turnaround</h4>
+        <h4>The skin turnaround</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>The most-shared KLOW stories are <strong>skin stories</strong>: posters describing angry, painful skin issues — sores, irritation, rough patches — that seemed to calm dramatically within weeks of starting the stack, sometimes with before-and-after photos.</p>
       <div class="caveat">Caveat: Skin flares wax and wane on their own, photos are lit to impress, and nobody verifies what else changed. A dramatic skin story is still an n=1 with a camera.</div>
     </div>
-    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal d1">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(95,157,255,.12)"/><path d="M32 12a20 20 0 1 1-14 6" fill="none" stroke="#5f9dff" stroke-width="3.5" stroke-linecap="round"/><path d="M18 8v8h8" fill="none" stroke="#5f9dff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="6" fill="#5f9dff"/></svg>
-        <h4>The “recovery reset”</h4>
+        <h4>The “recovery reset”</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Posters describing a <strong>whole-body reset feeling</strong> — old niggles quieting at once, training capacity creeping back, “I just feel normal again.” The four-in-one pitch makes people attribute <em>everything</em> improving to the stack.</p>
       <div class="caveat">Caveat: When four compounds are taken together, any improvement gets credited to the stack and any non-improvement gets forgotten. Attribution with four variables and no controls is guesswork.</div>
     </div>
-    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(251,113,133,.12)"/><path d="M20 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round"/><path d="M32 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round"/><path d="M44 14c8 6 8 14 0 20s-8 14 0 20" fill="none" stroke="#fb7185" stroke-width="3.5" stroke-linecap="round"/></svg>
-        <h4>The gut calm</h4>
+        <h4>The gut calm</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>The KPV angle shows up here: posters describing <strong>less bloating, calmer stomachs, fewer reactions to trigger foods</strong> over weeks — often people who say BPC-157 alone “wasn't enough” and credit the addition of KPV.</p>
       <div class="caveat">Caveat: Gut symptoms swing with diet, stress, and time — the three things forum posters almost never control for. And crediting one of four compounds for a gut change is pure speculation.</div>
     </div>
-    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal d1">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(183,155,255,.12)"/><rect x="14" y="28" width="20" height="9" rx="4.5" fill="#b79bff" transform="rotate(-24 24 32)"/><rect x="32" y="28" width="20" height="9" rx="4.5" fill="#b79bff" transform="rotate(24 42 32)"/><circle cx="33" cy="33" r="6" fill="#f0973c"/></svg>
-        <h4>The injury comeback</h4>
+        <h4>The injury comeback</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Lifters and runners describing <strong>tendon, elbow, shoulder, or knee complaints</strong> settling over several weeks on the stack — the classic “plateaued injury, started KLOW, back training by week four” arc.</p>
       <div class="caveat">Caveat: Rest, deloading, and the natural healing curve produce exactly this arc. Tendon issues famously resolve on timelines that look like treatment effects.</div>
     </div>
-    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(95,157,255,.12)"/><rect x="10" y="18" width="44" height="28" rx="6" fill="none" stroke="#7f88a5" stroke-width="2.5"/><path d="M16 33h9l3-6 3 6h17" stroke="#7f88a5" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h4>The quiet “nothing happened”</h4>
+        <h4>The quiet “nothing happened”</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Buried in every long thread: <strong>“felt zero difference,”</strong> “expensive experiment,” “couldn't tell.” These posts rarely get upvoted — but they're numerous, and they come from people who wanted it to work.</p>
       <div class="caveat">Caveat: Selection bias in its purest form: boring non-results sink while exciting stories float. Any honest read weights these equally with the success stories.</div>
     </div>
-    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal d1">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(251,113,133,.12)"/><rect x="24" y="10" width="16" height="34" rx="4" fill="none" stroke="#fb7185" stroke-width="3"/><rect x="24" y="30" width="16" height="14" fill="#fb7185" opacity=".45"/><path d="M18 52h28" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/></svg>
-        <h4>The quality scares</h4>
+        <h4>The quality scares</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Recurring complaints about <strong>blend consistency</strong> — one vial feeling different from the next, cloudy product, labels that don't match — plus irritation some users blame on a bad batch rather than the compounds.</p>
       <div class="caveat">Caveat: Anonymous and unverifiable — but consistent with independent lab testing that keeps finding mislabeled gray-market peptides. With blends, “it didn't work” and “it wasn't what it said” are indistinguishable.</div>
     </div>
-    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(240,151,60,.12)"/><circle cx="22" cy="32" r="13" fill="none" stroke="#f0973c" stroke-width="3"/><circle cx="42" cy="32" r="13" fill="none" stroke="#fb7185" stroke-width="3"/><circle cx="32" cy="32" r="4" fill="#b79bff"/></svg>
-        <h4>The “KLOW vs GLOW” debate</h4>
+        <h4>The “KLOW vs GLOW” debate</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Endless threads argue whether <strong>KPV earns its place</strong> — is the fourth compound doing anything, or is KLOW just pricier GLOW? Both sides cite the same handful of mouse studies and their own n=1.</p>
       <div class="caveat">Caveat: Nobody can separate KPV's contribution inside a four-compound blend without a controlled comparison. The debate is unresolvable by design.</div>
     </div>
-    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal d1">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(251,113,133,.12)"/><path d="M32 8c10 12 16 20 16 30a16 16 0 0 1-32 0c0-10 6-18 16-30z" fill="none" stroke="#fb7185" stroke-width="3"/><path d="M26 38a8 8 0 0 0 8 8" fill="none" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/></svg>
-        <h4>The inflammation stories</h4>
+        <h4>The inflammation stories</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Posters describing a <strong>general “less inflamed” feeling</strong> — morning stiffness easing, achy joints quieter, faster bounce-back after hard sessions — usually credited to KPV, the stack's advertised inflammation-brake.</p>
       <div class="caveat">Caveat: “Feeling less inflamed” is one of the most placebo-responsive impressions there is, and rest plus reduced training load does exactly this. No biomarker, no claim.</div>
     </div>
-    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(240,151,60,.12)"/><circle cx="32" cy="26" r="10" fill="none" stroke="#f0973c" stroke-width="3"/><path d="M32 36v16M24 44l8-4 8 4" stroke="#f0973c" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
-        <h4>Hair, skin &amp; nails</h4>
+        <h4>Hair, skin &amp; nails</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>The GHK-Cu cosmetic halo: <strong>thicker-feeling hair, faster nail growth, “better skin”</strong> — a grab-bag of cosmetic observations, always unmeasured, often reported as a package deal.</p>
       <div class="caveat">Caveat: Nobody measures these; lighting, grooming, and wishful thinking do the heavy lifting. Five simultaneous cosmetic wins with no measurements is a signal about perception.</div>
     </div>
-    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal d1">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(183,155,255,.12)"/><text x="32" y="43" text-anchor="middle" fill="#b79bff" font-size="26" font-weight="800" font-family="inherit">?</text></svg>
-        <h4>The question nobody can answer</h4>
+        <h4>The question nobody can answer</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>A recurring post type: <strong>“Has anyone run this long-term? What happened after a year?”</strong> The replies are silence or speculation — because no one, researchers included, has long-term human data on the stack.</p>
       <div class="caveat">Caveat: The most honest thread format on the forums — an unanswered question. Anyone selling certainty about long-term effects is selling something the science doesn't have.</div>
     </div>
-    <div class="anec reveal"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(95,157,255,.12)"/><rect x="12" y="36" width="8" height="16" rx="2" fill="#5f9dff"/><rect x="24" y="28" width="8" height="24" rx="2" fill="#5f9dff"/><rect x="36" y="20" width="8" height="32" rx="2" fill="#5f9dff"/><path d="M10 24l14-6 12 4 12-8" stroke="#5f9dff" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
-        <h4>The bloodwork claims</h4>
+        <h4>The bloodwork claims</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>Occasional posters share <strong>before-and-after lab numbers</strong> — CRP, hormone panels — claiming improvements on the stack. The figures arrive as unverified screenshots with no mention of what else changed between draws.</p>
       <div class="caveat">Caveat: Labs fluctuate with sleep, diet, illness, and training. A screenshot of a lab value is not a study — it's a story with decimal points.</div>
     </div>
-    <div class="anec reveal d1"><span class="stamp">Unverified anecdote</span>
+    <div class="anec reveal d1">
       <div class="anec-head">
         <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="rgba(183,155,255,.12)"/><circle cx="20" cy="32" r="8" fill="#b79bff"/><circle cx="32" cy="32" r="8" fill="#f0973c"/><circle cx="44" cy="32" r="8" fill="#5f9dff"/><text x="32" y="56" text-anchor="middle" fill="#7f88a5" font-size="14" font-weight="800" font-family="inherit">?</text></svg>
-        <h4>The “which one worked?” problem</h4>
+        <h4>The “which one worked?” problem</h4><span class="udot" role="img" aria-label="Unverified anecdote"></span>
       </div>
       <p>The stack's signature epistemic trap, raised even by fans: <strong>when four compounds go in together, nobody knows which one did anything</strong> — or whether it was the combination, the rest, or nothing at all.</p>
       <div class="caveat">Caveat: This is the most self-aware theme in the culture, and it's correct. Multi-compound stacks are uninterpretable by nature — that's a feature of the marketing, not the science.</div>
