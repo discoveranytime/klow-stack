@@ -208,6 +208,17 @@ h2 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;
 .folk-note{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:var(--radius);
   padding:1.2rem 1.4rem;margin-bottom:1.6rem;color:var(--muted);font-size:.98rem}
 .folk-note strong{color:var(--amber)}
+
+/* --- ambient motion additions: subtle, additive, non-intrusive --- */
+@keyframes ringp{0%{transform:scale(.5);opacity:.85}100%{transform:scale(2.1);opacity:0}}
+.ringp{transform-box:fill-box;transform-origin:center;animation:ringp 2.8s ease-out infinite}
+@keyframes seqGlow{0%,100%{opacity:.35}18%{opacity:1}40%{opacity:.35}}
+.seqr1{animation:seqGlow 4.5s ease-in-out infinite}
+.seqr2{animation:seqGlow 4.5s ease-in-out .9s infinite}
+.seqr3{animation:seqGlow 4.5s ease-in-out 1.8s infinite}
+.flowseq{stroke-dasharray:6 7;animation:dashmove 1.6s linear infinite,seqGlow 4.5s ease-in-out infinite}
+.flowseq2{stroke-dasharray:6 7;animation:dashmove 1.6s linear infinite,seqGlow 4.5s ease-in-out .9s infinite}
+.flowseq3{stroke-dasharray:6 7;animation:dashmove 1.6s linear infinite,seqGlow 4.5s ease-in-out 1.8s infinite}
 </style>
 <style>
 /* ---------- glossary accordion ---------- */
@@ -288,7 +299,7 @@ footer.disclaimer .fine strong{color:var(--muted)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none;transition:none}
-  .flow,.float-slow,.float-slower,.glow-pulse,.travel,.drift,.gthumb,.orb,.take .ic,.hero h1 .g{animation:none}
+  .flow,.float-slow,.float-slower,.glow-pulse,.travel,.drift,.gthumb,.orb,.take .ic,.hero h1 .g,.ringp,.seqr1,.seqr2,.seqr3,.flowseq,.flowseq2,.flowseq3{animation:none}
   .sprout{transition:none}
   .toc-pill{transition:none}
   .scroll-hint{animation:none}
@@ -607,9 +618,9 @@ nav.chapters .rail{padding-right:3.8rem}
           <text x="120" y="264" text-anchor="middle" fill="#a9b1c9" font-size="11">cells migrate</text>
         </g>
         <g>
-          <line x1="160" y1="70" x2="400" y2="140" stroke="#f0973c" stroke-width="2" stroke-dasharray="6 6" class="flow" marker-end="url(#ah)"/>
-          <line x1="160" y1="160" x2="400" y2="155" stroke="#b79bff" stroke-width="2" stroke-dasharray="6 6" class="flow" marker-end="url(#ah)"/>
-          <line x1="160" y1="250" x2="400" y2="175" stroke="#5f9dff" stroke-width="2" stroke-dasharray="6 6" class="flow" marker-end="url(#ah)"/>
+          <line x1="160" y1="70" x2="400" y2="140" stroke="#f0973c" stroke-width="2" stroke-dasharray="6 6" class="flowseq" marker-end="url(#ah)"/>
+          <line x1="160" y1="160" x2="400" y2="155" stroke="#b79bff" stroke-width="2" stroke-dasharray="6 class="flowseq2"ow" marker-end="url(#ah)"/>
+          <line x1="160" y1="250" x2="400" y2="175" stroke="#5f9dff" stroke-width="2" stroke-dasharrayclass="flowseq3"="flow" marker-end="url(#ah)"/>
         </g>
         <g class="glow-pulse">
           <circle cx="480" cy="160" r="72" fill="rgba(237,240,249,.04)" stroke="#edf0f9" stroke-width="2"/>
@@ -623,7 +634,7 @@ nav.chapters .rail{padding-right:3.8rem}
           <text x="740" y="156" text-anchor="middle" fill="#fb7185" font-size="14" font-weight="800">KPV</text>
           <text x="740" y="174" text-anchor="middle" fill="#a9b1c9" font-size="11">brake on</text>
           <text x="740" y="188" text-anchor="middle" fill="#a9b1c9" font-size="11">inflammation</text>
-          <path d="M692 160 h-52" stroke="#fb7185" stroke-width="3" stroke-dasharray="6 5" class="flow"/>
+          <path d="M692 160 h-52" stroke="#fb7185" stroke-width="3" stroke-dashaclass="flowseq"lass="flow"/>
           <path d="M628 150 l14 10 l-14 10" fill="none" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
           <text x="740" y="246" text-anchor="middle" fill="#7f88a5" font-size="12" font-family="inherit">NF-κB alarm → quieted</text>
           <text x="740" y="264" text-anchor="middle" fill="#7f88a5" font-size="12" font-family="inherit">(proposed, animal work)</text>
@@ -699,27 +710,27 @@ nav.chapters .rail{padding-right:3.8rem}
       <line x1="60" y1="150" x2="840" y2="150" stroke="#3a4160" stroke-width="3"/>
       <g font-family="inherit" text-anchor="middle">
         <g class="float-slow">
-          <circle cx="120" cy="150" r="12" fill="#fb7185"/>
+          <circle class="ringp" cx="120" cy="150" r="12" fill="none" stroke="#fb7185" stroke-width="2"/><circle cx="120" cy="150" r="12" fill="#fb7185"/>
           <text x="120" y="120" fill="#fb7185" font-size="16" font-weight="800">1989</text>
           <text x="120" y="190" fill="#a9b1c9" font-size="12">KPV calms inflammation</text>
           <text x="120" y="208" fill="#7f88a5" font-size="11">in mice, steroid-level</text>
         </g>
         <g class="float-slower">
-          <circle cx="330" cy="150" r="12" fill="#fb7185"/>
+          <circle class="ringp" cx="330" cy="150" r="12" fill="none" stroke="#fb7185" stroke-width="2"/><circle cx="330" cy="150" r="12" fill="#fb7185"/>
           <text x="330" y="120" fill="#fb7185" font-size="16" font-weight="800">2008</text>
           <text x="330" y="190" fill="#a9b1c9" font-size="12">PepT1 transporter found:</text>
           <text x="330" y="208" fill="#7f88a5" font-size="11">KPV enters gut cells,</text>
           <text x="330" y="224" fill="#7f88a5" font-size="11">quiets colitis in mice</text>
         </g>
         <g class="float-slow">
-          <circle cx="540" cy="150" r="12" fill="#fb7185"/>
+          <circle class="ringp" cx="540" cy="150" r="12" fill="none" stroke="#fb7185" stroke-width="2"/><circle cx="540" cy="150" r="12" fill="#fb7185"/>
           <text x="540" y="120" fill="#fb7185" font-size="16" font-weight="800">2010–17</text>
           <text x="540" y="190" fill="#a9b1c9" font-size="12">Targeted delivery:</text>
           <text x="540" y="208" fill="#7f88a5" font-size="11">nanoparticles concentrate</text>
           <text x="540" y="224" fill="#7f88a5" font-size="11">KPV at inflamed colon</text>
         </g>
         <g class="float-slower">
-          <circle cx="760" cy="150" r="12" fill="#5f9dff"/>
+          <circle class="ringp" cx="760" cy="150" r="12" fill="none" stroke="#5f9dff" stroke-width="2"/><circle cx="760" cy="150" r="12" fill="#5f9dff"/>
           <text x="760" y="120" fill="#5f9dff" font-size="16" font-weight="800">2026</text>
           <text x="760" y="190" fill="#a9b1c9" font-size="12">FDA advisory 8–6 vote</text>
           <text x="760" y="208" fill="#7f88a5" font-size="11">for compounding list</text>
@@ -896,6 +907,33 @@ nav.chapters .rail{padding-right:3.8rem}
   <div class="eyebrow reveal"><span class="n">07</span> Risks &amp; unknowns</div>
   <h2 class="reveal">Open questions, <span class="hl">risks</span>, and unknowns</h2>
   <p class="lede reveal">Four investigational compounds means four unknowns — <strong>plus</strong> the unknowns of combining them. With no human safety record for any member, the risk profile isn't "low." It's <strong>blank</strong>.</p>
+      <div class="diagram reveal">
+      <svg viewBox="0 0 900 250" role="img" aria-label="Four pulsing nodes for the four open questions, one per peptide">
+      <g font-family="inherit" text-anchor="middle">
+      <text x="450" y="28" fill="#a9b1c9" font-size="14">Four compounds, four open questions — each one still pulsing</text>
+      <circle class="ringp" cx="150" cy="105" r="32" fill="none" stroke="#f0973c" stroke-width="2"/>
+      <circle cx="150" cy="105" r="32" fill="rgba(255,255,255,.03)" stroke="#f0973c" stroke-width="2"/>
+      <text x="150" y="100" fill="#f0973c" font-size="14" font-weight="800">GHK-Cu</text>
+      <text x="150" y="120" fill="#a9b1c9" font-size="11.5">injectable safety?</text>
+      <text x="150" y="168" fill="#7f88a5" font-size="12">systemic use uncharted</text>
+      <circle class="ringp" cx="350" cy="105" r="32" fill="none" stroke="#b79bff" stroke-width="2"/>
+      <circle cx="350" cy="105" r="32" fill="rgba(255,255,255,.03)" stroke="#b79bff" stroke-width="2"/>
+      <text x="350" y="100" fill="#b79bff" font-size="14" font-weight="800">BPC-157</text>
+      <text x="350" y="120" fill="#a9b1c9" font-size="11.5">long-term effects?</text>
+      <text x="350" y="168" fill="#7f88a5" font-size="12">no human data at all</text>
+      <circle class="ringp" cx="550" cy="105" r="32" fill="none" stroke="#5f9dff" stroke-width="2"/>
+      <circle cx="550" cy="105" r="32" fill="rgba(255,255,255,.03)" stroke="#5f9dff" stroke-width="2"/>
+      <text x="550" y="100" fill="#5f9dff" font-size="14" font-weight="800">TB-500</text>
+      <text x="550" y="120" fill="#a9b1c9" font-size="11.5">fragment in humans?</text>
+      <text x="550" y="168" fill="#7f88a5" font-size="12">zero trials, ever</text>
+      <circle class="ringp" cx="750" cy="105" r="32" fill="none" stroke="#fb7185" stroke-width="2"/>
+      <circle cx="750" cy="105" r="32" fill="rgba(255,255,255,.03)" stroke="#fb7185" stroke-width="2"/>
+      <text x="750" y="100" fill="#fb7185" font-size="14" font-weight="800">KPV</text>
+      <text x="750" y="120" fill="#a9b1c9" font-size="11.5">chronic use?</text>
+      <text x="750" y="168" fill="#7f88a5" font-size="12">no human data at all</text>
+      </g>
+      </svg>
+      </div>
 
   <div class="panel reveal">
     <div class="kv"><span class="k a">Long-term unknowns</span><p><strong>No long-term human data exists for any of the four.</strong> Effects on hormones, fertility, immune function, or cancer risk over months and years are simply unstudied — for each compound and especially for the stack.</p></div>
